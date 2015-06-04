@@ -9,8 +9,8 @@
 *.booproj
 *.unitypackage
 
-Assets/GVR/Resources/Version.prefab
-Assets/GVR/Resources/Version.prefab.meta
+Assets/Resources/Version.prefab
+Assets/Resources/Version.prefab.meta
 
 /Library
 /Library/FailedAssetImports.txt
