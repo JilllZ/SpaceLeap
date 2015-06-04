@@ -201,18 +201,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 254ae65700020884f84117fd884bc3c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wires: 5
-  sagAmount: .5
+  wires: 3
+  sagAmount: .129999995
   wireRadius: .0500000007
-  segmentsPerWire: 8
-  segmentResolution: 6
+  segmentsPerWire: 22
+  segmentResolution: 9
   anchorPoints:
-  - {x: 0, y: 1, z: 0}
-  - {x: 1, y: 1, z: 0}
-  - {x: 2, y: 1, z: 0}
-  - {x: 3, y: 1, z: 0}
-  - {x: 4, y: 1, z: 0}
-  - {x: 5, y: 1, z: 0}
+  - {x: .57525444, y: 1.13476968, z: 0}
+  - {x: 1, y: .600939929, z: 0}
+  - {x: 2, y: 1.25468421, z: 0}
+  - {x: 2.99473357, y: .999999821, z: 1.1546092}
+  - {x: 4, y: .999999821, z: 0}
+  - {x: 5, y: .999999821, z: 0}
+  - {x: 6, y: .999999821, z: 0}
+  - {x: 7, y: .999999821, z: 0}
+  - {x: 8, y: .999999821, z: 0}
+  - {x: 9, y: .999999821, z: 0}
+  - {x: 10, y: -3.73043036, z: 0}
+  - {x: 11, y: -8.46086025, z: 0}
+  - {x: 12, y: -13.1912899, z: 0}
+  - {x: 13, y: -17.9217186, z: 0}
 --- !u!33 &566019530
 MeshFilter:
   m_ObjectHideFlags: 0

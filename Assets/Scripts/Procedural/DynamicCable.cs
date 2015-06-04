@@ -27,7 +27,6 @@ public class DynamicCable : MonoBehaviour {
     private List<Vector2> _uvs = new List<Vector2>();
     private List<int> _triangles = new List<int>();
 
-    // Use this for initialization
     void Awake() {
         _meshFilter = GetComponent<MeshFilter>();
         _mesh = new Mesh();
@@ -118,7 +117,6 @@ public class DynamicCable : MonoBehaviour {
     }
 
     private Vector3 getMeshRingCenter(int index) {
-        //return Vector3.zero;
         int startAnchor = index / segmentsPerWire;
         int endAnchor = startAnchor + 1;
 
