@@ -11,7 +11,6 @@ public enum InteractionPointConnectMethod {
 
 public class InteractionPoint {
     private Vector3 _referenceOffset;
-	private Vector3 _referenceNormal;
 
     private InteractionObject _interactionObject;
 
@@ -38,23 +37,11 @@ public class InteractionPoint {
         }
     }
 
-	public Vector3 globalReferenceNormal {
-		get {
-            return _interactionObject.getWorldDirection(_referenceNormal);
-		}
-	}
-
     public Vector3 localReferencePosition {
         get {
             return _referenceOffset;
         }
     }
-
-	public Vector3 localReferenceNormal {
-		get {
-			return _referenceNormal;
-		}
-	}
 
     public bool isConnected {
         get {

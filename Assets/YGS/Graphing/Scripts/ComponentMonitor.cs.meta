@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 2cb2064b7f23578408d36fabcb4cb1f6
+labels:
+- Monitor
+- Component
+- Debug
+- Track
+- Graph
+- Value
+- Console
+- Draw
+- Watch
+- Visual
+- Data
+- Log
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

@@ -1,0 +1,33 @@
+fileFormatVersion: 2
+guid: 78038b75ba1d94f41a36987da16c8c29
+labels:
+- Component
+- Monitor
+- Debug
+- Track
+- Graph
+- Value
+- Console
+- Draw
+- Watch
+- Visual
+- Data
+- Log
+timeCreated: 1428697687
+licenseType: Store
+PluginImporter:
+  serializedVersion: 1
+  iconMap: {}
+  executionOrder: {}
+  isPreloaded: 0
+  platformData:
+    Any:
+      enabled: 1
+      settings: {}
+    Editor:
+      enabled: 0
+      settings:
+        DefaultValueInitialized: true
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
