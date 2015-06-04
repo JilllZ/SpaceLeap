@@ -1,12 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
 
 public class PlayerController : NetworkBehaviour {
+    private static PlayerController _localPlayer;
 
-    [Command]
-    void CmdToggleBox() {
-        FindObjectOfType<GameController>().toggleBox();
+    public static PlayerController localPlayer {
+        get {
+            return _localPlayer;
+        }
+    }
+
+    [ClientCallback]
+    void Start() {
+        if (isLocalPlayer) {
+            _localPlayer = this;
+        }
     }
 
     [ClientCallback]
@@ -16,7 +26,7 @@ public class PlayerController : NetworkBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.Space)) {
-            CmdToggleBox();
+            CustomLobbyManager.myClient.Send(TestMessage.ID, new TestMessage());
         }
     }
 }

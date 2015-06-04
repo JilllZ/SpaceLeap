@@ -6,7 +6,12 @@ public class GameController : NetworkBehaviour {
     [SyncVar]
     public bool displayGui = false;
 
-    public void toggleBox() {
+    [ServerCallback]
+    void Start() {
+        NetworkServer.RegisterHandler(TestMessage.ID, handleTestMessage);
+    }
+
+    private void handleTestMessage(NetworkMessage message) {
         displayGui = !displayGui;
     }
 

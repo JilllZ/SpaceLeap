@@ -209,7 +209,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1831677286}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -859942077, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Script: {fileID: 11500000, guid: a7ee8c769499c824a8141cf53a7834ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_NetworkPort: 7777
@@ -217,7 +217,7 @@ MonoBehaviour:
   m_DontDestroyOnLoad: 1
   m_RunInBackground: 1
   m_SendPeerInfo: 0
-  m_MaxDelay: 1
+  m_MaxDelay: .00999999978
   m_LogLevel: 2
   m_PlayerPrefab: {fileID: 187212, guid: b5333e79500bb6a41a2588bc431cb8ed, type: 2}
   m_AutoCreatePlayer: 1
