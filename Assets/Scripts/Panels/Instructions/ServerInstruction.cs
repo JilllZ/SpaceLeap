@@ -17,4 +17,31 @@ public class ServerInstruction {
         this.panelActionSetId = panelActionSetId;
         this.panelActionVariantIndex = panelActionVariantIndex;
     }
+
+    public override bool Equals(object obj) {
+        ServerInstruction other = obj as ServerInstruction;
+        if (other == null) {
+            return false;
+        }
+
+        return other.instructionPerformerConnection == instructionPerformerConnection &&
+               other.instructionReaderConnection == instructionReaderConnection &&
+               other.panelActionSetId == panelActionSetId &&
+               other.panelActionVariantIndex == panelActionVariantIndex;
+    }
+
+    public override int GetHashCode() {
+        int hash = 17;
+        hash = hash * 23 + instructionReaderConnection;
+        hash = hash * 23 + instructionPerformerConnection;
+        hash = hash * 23 + panelActionSetId;
+        hash = hash * 23 + panelActionVariantIndex;
+        return hash;
+    }
+
+    public bool conflictsWith(ServerInstruction other) {
+        return other.instructionPerformerConnection == instructionPerformerConnection &&
+               other.instructionReaderConnection != instructionReaderConnection &&
+               other.panelActionSetId == panelActionSetId;
+    }
 }

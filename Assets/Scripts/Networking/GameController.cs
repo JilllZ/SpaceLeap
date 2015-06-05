@@ -12,67 +12,106 @@ public class GameController : NetworkBehaviour {
     private Dictionary<int, PanelActionSetBase> _idToPanelActionSets = new Dictionary<int, PanelActionSetBase>();
     private Dictionary<int, List<PanelActionSetBase>> _connectionIdToPanelIds = new Dictionary<int, List<PanelActionSetBase>>();
 
-    //Maps the reciever of the instruction to the server instruction struct
-    private Dictionary<int, ServerInstruction> _currentInstructions = new Dictionary<int, ServerInstruction>();
+    //List of all instructions currently being dispatched
+    private List<ServerInstruction> _currentInstructions = new List<ServerInstruction>();
 
-    [ServerCallback]
-    void Start() {
-        //Register the handler for the panel actions coming from the clients
-        CustomMessage.registerHandler<PanelActionMessage>(handlePanelAction);
-
-        //Register handlers for the definitions of panel action sets
-        CustomMessage.registerHandler<CodePanelActionSet>(s => handleGenericPanelActionSet(s));
-        CustomMessage.registerHandler<SinglePanelActionSet>(s => handleGenericPanelActionSet(s));
-        CustomMessage.registerHandler<ReplacementPanelActionSet>(s => handleGenericPanelActionSet(s));
+    private IEnumerable<NetworkConnection> allConnections {
+        get {
+            return NetworkServer.localConnections.Concat(NetworkServer.connections).Where(c => c != null);
+        }
     }
 
-    private void handleGenericPanelActionSet(PanelActionSetBase set) {
+    [ServerCallback]
+    void Awake() {
+        //Register the handler for the panel actions coming from the clients
+        CustomMessage.registerServerHandler<PanelActionMessage>(handlePanelAction);
+
+        //Register handlers for the definitions of panel action sets
+        CustomMessage.registerServerHandler<CodePanelActionSet>(s => handleGenericPanelActionSet<CodePanelActionSet>(s));
+        CustomMessage.registerServerHandler<SinglePanelActionSet>(s => handleGenericPanelActionSet<SinglePanelActionSet>(s));
+        CustomMessage.registerServerHandler<ReplacementPanelActionSet>(s => handleGenericPanelActionSet<ReplacementPanelActionSet>(s));
+    }
+
+    [ServerCallback]
+    IEnumerator Start() {
+        yield return new WaitForSeconds(1.0f);
+        foreach (var connection in allConnections) {
+            issueNewInstruction(connection.connectionId);
+        }
+    }
+
+    private void handleGenericPanelActionSet<T>(NetworkMessage message) where T : PanelActionSetBase, new(){
+        T set = message.ReadMessage<T>();
+
         _idToPanelActionSets[set.setId] = set;
         List<PanelActionSetBase> idList;
-        if (!_connectionIdToPanelIds.TryGetValue(set.senderId, out idList)) {
+        if (!_connectionIdToPanelIds.TryGetValue(message.conn.connectionId, out idList)) {
             idList = new List<PanelActionSetBase>();
-            _connectionIdToPanelIds[set.senderId] = idList;
+            _connectionIdToPanelIds[message.conn.connectionId] = idList;
         }
         idList.Add(set);
     }
 
-    private void handlePanelAction(PanelActionMessage panelAction) {
+    private void handlePanelAction(NetworkMessage message) {
+        PanelActionMessage panelAction = message.ReadMessage<PanelActionMessage>();
+
         _idToPanelActionSets[panelAction.setId].currentVariantIndex = panelAction.variantIndex;
 
-        var satisfiedInstruction = (from instruction in _currentInstructions.Values
+        var satisfiedInstruction = (from instruction in _currentInstructions
                                    where instruction.panelActionSetId == panelAction.setId
                                    where instruction.panelActionVariantIndex == panelAction.variantIndex
                                    select instruction).FirstOrDefault();
 
         if (satisfiedInstruction != null) {
             issueNewInstruction(satisfiedInstruction.instructionReaderConnection);
+            _currentInstructions.Remove(satisfiedInstruction);
         }
 
     }
 
     private void issueNewInstruction(int recieverConnectionId) {
-        bool shouldPerformAsWell = Random.value > instructionPerformerBias;
+        bool shouldPerformAsWell;
+        
+        if(allConnections.Count() == 1){
+            shouldPerformAsWell = true;
+        }else{
+            shouldPerformAsWell = Random.value > instructionPerformerBias;
+        }
+
         int performerConnectionId;
         if (shouldPerformAsWell) {
             performerConnectionId = recieverConnectionId;
         } else {
-            performerConnectionId = (from connection in NetworkServer.connections
+            performerConnectionId = (from connection in allConnections
                                      where connection.connectionId != recieverConnectionId
                                      select connection.connectionId).chooseRandom();
         }
 
+        //Grab the list of panels for the performer
         List<PanelActionSetBase> panelActionSets;
         if (!_connectionIdToPanelIds.TryGetValue(performerConnectionId, out panelActionSets)) {
             throw new System.Exception("Could not find list of panel action sets for connection id " + performerConnectionId);
         }
 
-        PanelActionSetBase randomPanelActionSet = panelActionSets.chooseRandom();
-        int variantIndex = Random.Range(0, randomPanelActionSet.getVariantCount());
+        PanelActionSetBase randomPanelActionSet;
+        int randomVariant;
+        ServerInstruction newInstruction;
+        do {
+            //Choose a random panel for the performer
+            randomPanelActionSet = panelActionSets.chooseRandom();
 
-        ServerInstruction newInstruction = new ServerInstruction(recieverConnectionId, performerConnectionId, randomPanelActionSet.setId, variantIndex);
-        _currentInstructions[recieverConnectionId] = newInstruction;
+            //Choose a variant that is not currently active on the panel
+            do {
+                randomVariant = Random.Range(0, randomPanelActionSet.getVariantCount());
+            } while (randomPanelActionSet.currentVariantIndex == randomVariant);
 
-        string instructionText = randomPanelActionSet.getVariant(variantIndex);
+            newInstruction = new ServerInstruction(recieverConnectionId, performerConnectionId, randomPanelActionSet.setId, randomVariant);
+        } while (_currentInstructions.Contains(newInstruction) || _currentInstructions.Any(s => s.conflictsWith(newInstruction)));
+        
+        _currentInstructions.Add(newInstruction);
+
+        string instructionText = randomPanelActionSet.getVariant(randomVariant);
+
         DisplayInstructionMessage displayInstructionMessage = new DisplayInstructionMessage(instructionText);
         displayInstructionMessage.sendToClient(recieverConnectionId);
     }
