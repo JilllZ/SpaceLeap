@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.Networking; 
+using UnityEngine.Networking;
 using System.Collections;
 
 public class ReplacementPanelActionSet : PanelActionSetBase {
@@ -10,7 +10,8 @@ public class ReplacementPanelActionSet : PanelActionSetBase {
 
     public ReplacementPanelActionSet() { }
 
-    public ReplacementPanelActionSet(string instructionBase, params string[] variantReplacements) {
+    public ReplacementPanelActionSet(string panelLabel, string instructionBase, params string[] variantReplacements)
+        : base(panelLabel) {
         _instructionBase = instructionBase;
         _variantReplacements = variantReplacements;
     }

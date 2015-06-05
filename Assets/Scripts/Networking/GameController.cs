@@ -24,32 +24,33 @@ public class GameController : NetworkBehaviour {
     [ServerCallback]
     void Awake() {
         //Register the handler for the panel actions coming from the clients
-        CustomMessage.registerServerHandler<PanelActionMessage>(handlePanelAction);
-
-        //Register handlers for the definitions of panel action sets
-        CustomMessage.registerServerHandler<CodePanelActionSet>(s => handleGenericPanelActionSet<CodePanelActionSet>(s));
-        CustomMessage.registerServerHandler<SinglePanelActionSet>(s => handleGenericPanelActionSet<SinglePanelActionSet>(s));
-        CustomMessage.registerServerHandler<ReplacementPanelActionSet>(s => handleGenericPanelActionSet<ReplacementPanelActionSet>(s));
+        CustomMessage.registerServerHandler<PanelActionMessage>(handlePanelAction); 
     }
 
     [ServerCallback]
-    IEnumerator Start() {
-        yield return new WaitForSeconds(1.0f);
+    void Start() {
+        List<List<CreatePanelMessage>> allPanels = FindObjectOfType<PanelGenerator>().generateAllPanelsForAllPlayers(allConnections.Count());
+        int index = 0;
+        foreach (NetworkConnection connection in allConnections) {
+            foreach (CreatePanelMessage createPanelMessage in allPanels[index]) {
+                PanelActionSetBase actionSet = createPanelMessage.actionSet;
+
+                _idToPanelActionSets[actionSet.setId] = actionSet;
+                List<PanelActionSetBase> idList;
+                if (!_connectionIdToPanelIds.TryGetValue(connection.connectionId, out idList)) {
+                    idList = new List<PanelActionSetBase>();
+                    _connectionIdToPanelIds[connection.connectionId] = idList;
+                }
+                idList.Add(actionSet);
+
+                createPanelMessage.sendToClient(connection);
+            }
+            index++;
+        }
+
         foreach (var connection in allConnections) {
             issueNewInstruction(connection.connectionId);
         }
-    }
-
-    private void handleGenericPanelActionSet<T>(NetworkMessage message) where T : PanelActionSetBase, new(){
-        T set = message.ReadMessage<T>();
-
-        _idToPanelActionSets[set.setId] = set;
-        List<PanelActionSetBase> idList;
-        if (!_connectionIdToPanelIds.TryGetValue(message.conn.connectionId, out idList)) {
-            idList = new List<PanelActionSetBase>();
-            _connectionIdToPanelIds[message.conn.connectionId] = idList;
-        }
-        idList.Add(set);
     }
 
     private void handlePanelAction(NetworkMessage message) {

@@ -1,27 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
-public class TestPanel : MonoBehaviour {
+public class TestPanel : InteractionPanel {
     private const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    private char _chosenLetter;
     private KeyCode _chosenKeyCode;
 
-    private SinglePanelActionSet _actionSet;
-
-    void Awake() {
-        _chosenLetter = ALPHABET.chooseRandom();
-        int offset = _chosenLetter - 'A';
-        _chosenKeyCode = (KeyCode)((int)KeyCode.A + offset);
-
-        _actionSet = new SinglePanelActionSet("Press " + _chosenLetter);
-
-        GetComponent<Text>().text = _chosenKeyCode.ToString();
+    public override PanelActionSetBase createViableActionSet(HashSet<string> existingLabels) {
+        char randomChar = ALPHABET.chooseRandom(c => !existingLabels.Contains(c.ToString()));
+        return new SinglePanelActionSet(randomChar.ToString(), "Press " + randomChar);
     }
 
-    void Start() {
-        _actionSet.initialize();
+    public override void setActionSet(PanelActionSetBase actionSet) {
+        _chosenKeyCode = (KeyCode)((int)KeyCode.A + actionSet.panelLabel[0]);
+        GetComponent<Text>().text = actionSet.panelLabel;
     }
 
     void Update() {
