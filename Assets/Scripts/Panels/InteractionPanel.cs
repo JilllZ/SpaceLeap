@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public abstract class InteractionPanel : MonoBehaviour {
+    public const float CELL_SIZE = 0.2f;
+
     [MinValue(0.01f)]
     public float spawnWeight;
     [MinValue(1)]
@@ -18,4 +20,9 @@ public abstract class InteractionPanel : MonoBehaviour {
     }
 
     public abstract PanelActionSetBase createViableActionSet(HashSet<string> existingLabels);
+
+    void OnDrawGizmos() {
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireCube(transform.position, new Vector3(dimensionX, dimensionY, 0) * CELL_SIZE);
+    }
 }

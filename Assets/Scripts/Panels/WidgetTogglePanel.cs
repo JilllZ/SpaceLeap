@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using LMWidgets;
 
-public class ToggleButtonPanel : InteractionPanel {
+public class WidgetTogglePanel : InteractionPanel {
     private const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private const int VARIANT_ON = 0;
     private const int VARIANT_OFF = 1;

@@ -16,6 +16,10 @@ public class ReplacementPanelActionSet : PanelActionSetBase {
         _variantReplacements = variantReplacements;
     }
 
+    public string getReplacement(int variantIndex) {
+        return _variantReplacements[variantIndex];
+    }
+
     public override string getVariant(int variantIndex) {
         return _instructionBase.Replace(REPLACEMENT_CODE, _variantReplacements[variantIndex]);
     }
