@@ -2,13 +2,13 @@
 using UnityEngine.Networking; 
 using System.Collections;
 
-public class ReplacementInstructionSet : InstructionSetBase {
+public class ReplacementPanelActionSet : PanelActionSetBase {
     public const string REPLACEMENT_CODE = "#";
 
     private string _instructionBase;
     private string[] _variantReplacements;
 
-    public ReplacementInstructionSet(string instructionBase, params string[] variantReplacements) {
+    public ReplacementPanelActionSet(string instructionBase, params string[] variantReplacements) {
         _instructionBase = instructionBase;
         _variantReplacements = variantReplacements;
     }

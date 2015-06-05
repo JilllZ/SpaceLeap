@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ActionInstruction : InstructionSetBase {
+public class ActionInstruction : PanelActionSetBase {
     private string _actionInstruction;
 
     public ActionInstruction(string actionInstruction) {

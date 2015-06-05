@@ -2,7 +2,7 @@
 using UnityEngine.Networking;
 using System.Collections;
 
-public class CodeInstructionSet : InstructionSetBase {
+public class CodePanelActionSet : PanelActionSetBase {
     public const string REPLACEMENT_STRING = "#";
     public const short MESSAGE_ID = MsgType.Highest + 10;
 
@@ -11,7 +11,7 @@ public class CodeInstructionSet : InstructionSetBase {
     private short _maxNumber;
     private byte _minDigits;
 
-    public CodeInstructionSet(string instructionBase, int minNumber, int maxNumber, int minDigits) {
+    public CodePanelActionSet(string instructionBase, int minNumber, int maxNumber, int minDigits) {
         _instructionBase = instructionBase;
         _minNumber = (short)minNumber;
         _maxNumber = (short)maxNumber;

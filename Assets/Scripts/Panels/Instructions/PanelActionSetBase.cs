@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class InstructionSetBase : CustomMessage {
+public abstract class PanelActionSetBase : CustomMessage {
     private int _setId;
 
     public int setId {
@@ -10,7 +10,7 @@ public abstract class InstructionSetBase : CustomMessage {
         }
     }
 
-    public InstructionSetBase() {
+    public PanelActionSetBase() {
         _setId = Random.Range(int.MinValue, int.MaxValue);
     }
 
