@@ -163,9 +163,9 @@ public class SliderDemo : SliderBase
     }
   }
 
-  protected override void Awake()
+  protected override void Start()
   {
-    base.Awake();
+    base.Start();
     // Initiate the graphics for the handle
     ReleasedGraphics();
 
@@ -180,11 +180,10 @@ public class SliderDemo : SliderBase
       for (float x = lower_limit + increments / 2.0f; x < upper_limit; x += increments)
       {
         GameObject new_dot = Instantiate(dot) as GameObject;
-        new_dot.transform.parent = transform;
+        new_dot.transform.parent = transform.parent;
         new_dot.transform.localPosition = new Vector3(x, 1.0f, m_localTriggerDistance);
         new_dot.transform.localRotation = dot.transform.localRotation;
         new_dot.transform.localScale = Vector3.one;
-        new_dot.transform.parent = transform.parent;
         dots.Add(new_dot);
       }
       Destroy(dot);
