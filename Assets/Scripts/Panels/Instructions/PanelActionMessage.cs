@@ -7,10 +7,10 @@ using System.Collections;
  */
 public class PanelActionMessage : CustomMessage {
     public int setId;
-    public int variantNumber;
+    public int variantIndex;
 
     public PanelActionMessage(int setId, int variantNumber) {
         this.setId = setId;
-        this.variantNumber = variantNumber;
+        this.variantIndex = variantNumber;
     }
 }

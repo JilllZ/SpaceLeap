@@ -25,8 +25,6 @@ public class PlayerController : NetworkBehaviour {
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            new TestMessage().sendToServer();
-        }
+        //Do player stuff
     }
 }

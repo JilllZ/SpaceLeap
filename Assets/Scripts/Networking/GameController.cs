@@ -1,24 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameController : NetworkBehaviour {
-    [SyncVar]
-    public bool displayGui = false;
+    private Dictionary<int, PanelActionSetBase> _idToPanelActionSets = new Dictionary<int, PanelActionSetBase>();
 
     [ServerCallback]
     void Start() {
-        CustomMessage.registerHandler<TestMessage>(handleTestMessage);
+        CustomMessage.registerHandler<PanelActionMessage>(handlePanelAction);
     }
 
-    private void handleTestMessage(TestMessage message) {
-        displayGui = !displayGui;
+    private void handlePanelAction(PanelActionMessage panelAction) {
+        _idToPanelActionSets[panelAction.setId].currentVariantIndex = panelAction.variantIndex;
     }
 
-    [ClientCallback]
-    void OnGUI() {
-        if (displayGui) {
-            GUILayout.Box("OMG ITS A FLASHING BOX");
-        }
-    }
 }
