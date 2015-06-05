@@ -1,13 +1,29 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using System;
+using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CustomLobbyManager : NetworkLobbyManager {
     private static NetworkClient _myClient;
+    private static int _startedClients = 0;
 
     public static NetworkClient myClient {
         get {
             return _myClient;
+        }
+    }
+
+    public static bool allClientsStarted {
+        get {
+            return _startedClients == allConnections.Count();
+        }
+    }
+
+    public static IEnumerable<NetworkConnection> allConnections {
+        get {
+            return NetworkServer.localConnections.Concat(NetworkServer.connections).Where(c => c != null);
         }
     }
 
@@ -16,7 +32,19 @@ public class CustomLobbyManager : NetworkLobbyManager {
         _myClient = client;
     }
 
-    public override void OnStartServer() {
-        base.OnStartServer();
+    public override void OnServerSceneChanged(string sceneName) {
+        base.OnServerSceneChanged(sceneName);
+        if (sceneName == lobbyScene) {
+            _startedClients = 0;
+        }
+    }
+
+    
+    void Start() {
+        CustomMessage.registerServerHandler<ClientStartGame>(onClientStartGame);
+    }
+
+    private void onClientStartGame(NetworkMessage message) {
+        _startedClients++;
     }
 }

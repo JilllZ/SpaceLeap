@@ -14,42 +14,47 @@ public class GameController : NetworkBehaviour {
 
     //List of all instructions currently being dispatched
     private List<ServerInstruction> _currentInstructions = new List<ServerInstruction>();
-
-    private IEnumerable<NetworkConnection> allConnections {
-        get {
-            return NetworkServer.localConnections.Concat(NetworkServer.connections).Where(c => c != null);
-        }
-    }
-
+    
     [ServerCallback]
     void Awake() {
         //Register the handler for the panel actions coming from the clients
         CustomMessage.registerServerHandler<PanelActionMessage>(handlePanelAction);
-
-        //Register handlers for the definitions of panel action sets
-        CustomMessage.registerServerHandler<CodePanelActionSet>(s => handleGenericPanelActionSet<CodePanelActionSet>(s));
-        CustomMessage.registerServerHandler<SinglePanelActionSet>(s => handleGenericPanelActionSet<SinglePanelActionSet>(s));
-        CustomMessage.registerServerHandler<ReplacementPanelActionSet>(s => handleGenericPanelActionSet<ReplacementPanelActionSet>(s));
     }
 
-    [ServerCallback]
-    IEnumerator Start() {
-        yield return new WaitForSeconds(1.0f);
-        foreach (var connection in allConnections) {
+    void Start() {
+        StartCoroutine(waitForAllClientsToStart());
+    }
+
+    private IEnumerator waitForAllClientsToStart() {
+        while (!CustomLobbyManager.allClientsStarted) {
+            yield return null;
+        }
+
+        int playerCount = CustomLobbyManager.allConnections.Count();
+
+        List<List<CreatePanelMessage>> allPanels = PanelGenerator.generateAllPanelsForAllPlayers(playerCount);
+
+        int index = 0;
+        foreach (NetworkConnection connection in CustomLobbyManager.allConnections) {
+            foreach (CreatePanelMessage createPanelMessage in allPanels[index]) {
+                PanelActionSetBase actionSet = createPanelMessage.actionSet;
+
+                _idToPanelActionSets[actionSet.setId] = actionSet;
+                List<PanelActionSetBase> idList;
+                if (!_connectionIdToPanelIds.TryGetValue(connection.connectionId, out idList)) {
+                    idList = new List<PanelActionSetBase>();
+                    _connectionIdToPanelIds[connection.connectionId] = idList;
+                }
+                idList.Add(actionSet);
+
+                createPanelMessage.sendToClient(connection);
+            }
+            index++;
+        }
+
+        foreach (var connection in CustomLobbyManager.allConnections) {
             issueNewInstruction(connection.connectionId);
         }
-    }
-
-    private void handleGenericPanelActionSet<T>(NetworkMessage message) where T : PanelActionSetBase, new(){
-        T set = message.ReadMessage<T>();
-
-        _idToPanelActionSets[set.setId] = set;
-        List<PanelActionSetBase> idList;
-        if (!_connectionIdToPanelIds.TryGetValue(message.conn.connectionId, out idList)) {
-            idList = new List<PanelActionSetBase>();
-            _connectionIdToPanelIds[message.conn.connectionId] = idList;
-        }
-        idList.Add(set);
     }
 
     private void handlePanelAction(NetworkMessage message) {
@@ -71,8 +76,8 @@ public class GameController : NetworkBehaviour {
 
     private void issueNewInstruction(int recieverConnectionId) {
         bool shouldPerformAsWell;
-        
-        if(allConnections.Count() == 1){
+
+        if (CustomLobbyManager.allConnections.Count() == 1) {
             shouldPerformAsWell = true;
         }else{
             shouldPerformAsWell = Random.value > instructionPerformerBias;
@@ -82,7 +87,7 @@ public class GameController : NetworkBehaviour {
         if (shouldPerformAsWell) {
             performerConnectionId = recieverConnectionId;
         } else {
-            performerConnectionId = (from connection in allConnections
+            performerConnectionId = (from connection in CustomLobbyManager.allConnections
                                      where connection.connectionId != recieverConnectionId
                                      select connection.connectionId).chooseRandom();
         }

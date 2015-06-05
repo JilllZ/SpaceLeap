@@ -24,6 +24,9 @@ public class CustomMessage : MessageBase {
             if (existingType != messageType) {
                 throw new System.Exception("Collision occured with IDs, must be smater!");
             }
+        } else {
+            _idToType[id] = messageType;
+            Debug.Log(messageType.ToString() + " :: " + id);
         }
 
         return id;
