@@ -6,6 +6,7 @@ namespace LMWidgets
   public abstract class ButtonToggleBase : ButtonBase, BinaryInteractionHandler<bool>, IDataBoundWidget<ButtonToggleBase, bool> {
     protected DataBinderToggle m_dataBinder;
 
+    public event System.Action<bool> onToggle;
     protected bool m_toggleState = true;
 
     public abstract void ButtonTurnsOn();
@@ -56,6 +57,7 @@ namespace LMWidgets
     private void setButtonState(bool toggleState, bool force = false) {
       if ( toggleState == m_toggleState && !force ) { return; } // Don't do anything if there's no change
       m_toggleState = toggleState;
+      if(onToggle != null) onToggle(m_toggleState);
       if (m_toggleState == true)
         ButtonTurnsOn();
       else
