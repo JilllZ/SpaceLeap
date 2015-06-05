@@ -124,6 +124,8 @@ public class PanelGenerator : MonoBehaviour {
             }
         }
 
+        chosenActionSet.currentVariantIndex = Random.Range(0, chosenActionSet.getVariantCount());
+
         CreatePanelMessage creationMessage = new CreatePanelMessage(chosenActionSet, chosenX, chosenY, _instance.panelPrefabs.IndexOf(chosenPanel));
         return creationMessage;
     }
