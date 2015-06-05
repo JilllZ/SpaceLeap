@@ -16,7 +16,11 @@ public class PlayerController : NetworkBehaviour {
     void Start() {
         if (isLocalPlayer) {
             _localPlayer = this;
+        } else {
+            return;
         }
+
+        new ClientStartGame().sendToServer();
     }
 
     [ClientCallback]

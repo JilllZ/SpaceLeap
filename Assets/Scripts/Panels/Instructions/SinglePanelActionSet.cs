@@ -15,7 +15,8 @@ public class SinglePanelActionSet : PanelActionSetBase {
 
     public SinglePanelActionSet() { }
 
-    public SinglePanelActionSet(string actionInstruction) {
+    public SinglePanelActionSet(string panelLabel, string actionInstruction)
+        : base(panelLabel) {
         _actionInstruction = actionInstruction;
     }
 

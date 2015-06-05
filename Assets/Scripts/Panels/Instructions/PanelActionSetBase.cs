@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class PanelActionSetBase : CustomMessage {
+public abstract class PanelActionSetBase {
     protected int _setId;
     protected int _currentVariantIndex = -1;
+    protected string _panelLabel;
 
     public int setId {
         get {
@@ -20,23 +21,31 @@ public abstract class PanelActionSetBase : CustomMessage {
         }
     }
 
+    public string panelLabel {
+        get {
+            return _panelLabel;
+        }
+    }
+
     public abstract string getVariant(int variantIndex);
     public abstract int getVariantCount();
 
-    public void initialize() {
+    public PanelActionSetBase() { }
+
+    public PanelActionSetBase(string panelLabel) {
         _setId = Random.Range(int.MinValue, int.MaxValue);
-        sendToServer();
+        _panelLabel = panelLabel;
     }
 
-    public override void Serialize(UnityEngine.Networking.NetworkWriter writer) {
-        base.Serialize(writer);
+    public virtual void Serialize(UnityEngine.Networking.NetworkWriter writer) {
         writer.Write(_setId);
         writer.Write(_currentVariantIndex);
+        writer.Write(_panelLabel);
     }
 
-    public override void Deserialize(UnityEngine.Networking.NetworkReader reader) {
-        base.Deserialize(reader);
+    public virtual void Deserialize(UnityEngine.Networking.NetworkReader reader) {
         _setId = reader.ReadInt32();
         _currentVariantIndex = reader.ReadInt32();
+        _panelLabel = reader.ReadString();
     }
 }

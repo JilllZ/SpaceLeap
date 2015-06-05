@@ -13,7 +13,8 @@ public class CodePanelActionSet : PanelActionSetBase {
 
     public CodePanelActionSet() { }
 
-    public CodePanelActionSet(string instructionBase, int minNumber, int maxNumber, int minDigits) {
+    public CodePanelActionSet(string panelLabel, string instructionBase, int minNumber, int maxNumber, int minDigits)
+        : base(panelLabel) {
         _instructionBase = instructionBase;
         _minNumber = (short)minNumber;
         _maxNumber = (short)maxNumber;
