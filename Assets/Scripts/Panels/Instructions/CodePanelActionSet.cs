@@ -11,6 +11,8 @@ public class CodePanelActionSet : PanelActionSetBase {
     private short _maxNumber;
     private byte _minDigits;
 
+    public CodePanelActionSet() { }
+
     public CodePanelActionSet(string instructionBase, int minNumber, int maxNumber, int minDigits) {
         _instructionBase = instructionBase;
         _minNumber = (short)minNumber;

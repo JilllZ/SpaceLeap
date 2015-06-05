@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ActionInstruction : PanelActionSetBase {
+public class SinglePanelActionSet : PanelActionSetBase {
     private string _actionInstruction;
 
-    public ActionInstruction(string actionInstruction) {
+    public SinglePanelActionSet() { }
+
+    public SinglePanelActionSet(string actionInstruction) {
         _actionInstruction = actionInstruction;
     }
 

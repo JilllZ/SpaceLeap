@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 public class CustomMessage : MessageBase {
     private static Dictionary<short, Type> _idToType = new Dictionary<short, Type>();
+    public int senderId;
 
     public CustomMessage() { }
 
@@ -38,10 +39,17 @@ public class CustomMessage : MessageBase {
     }
 
     public void sendToServer() {
+        senderId = CustomLobbyManager.myClient.connection.connectionId;
         CustomLobbyManager.myClient.Send(getMessageId(GetType()), this);
     }
 
     public void sendToClient(NetworkConnection clientConnection) {
+        senderId = -1;
         NetworkServer.SendToClient(clientConnection.connectionId, getMessageId(GetType()), this);
+    }
+
+    public void sendToClient(int clientConnectionId) {
+        senderId = -1;
+        NetworkServer.SendToClient(clientConnectionId, getMessageId(GetType()), this);
     }
 }

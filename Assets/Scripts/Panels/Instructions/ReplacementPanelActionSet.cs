@@ -8,6 +8,8 @@ public class ReplacementPanelActionSet : PanelActionSetBase {
     private string _instructionBase;
     private string[] _variantReplacements;
 
+    public ReplacementPanelActionSet() { }
+
     public ReplacementPanelActionSet(string instructionBase, params string[] variantReplacements) {
         _instructionBase = instructionBase;
         _variantReplacements = variantReplacements;
