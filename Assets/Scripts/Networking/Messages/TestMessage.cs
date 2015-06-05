@@ -3,6 +3,5 @@ using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
 
-public class TestMessage : MessageBase {
-    public const short ID = 1005;
+public class TestMessage : CustomMessage {
 }

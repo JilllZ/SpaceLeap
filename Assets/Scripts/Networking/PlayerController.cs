@@ -26,7 +26,7 @@ public class PlayerController : NetworkBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.Space)) {
-            CustomLobbyManager.myClient.Send(TestMessage.ID, new TestMessage());
+            new TestMessage().sendToServer();
         }
     }
 }

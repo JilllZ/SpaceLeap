@@ -8,10 +8,10 @@ public class GameController : NetworkBehaviour {
 
     [ServerCallback]
     void Start() {
-        NetworkServer.RegisterHandler(TestMessage.ID, handleTestMessage);
+        CustomMessage.registerHandler<TestMessage>(handleTestMessage);
     }
 
-    private void handleTestMessage(NetworkMessage message) {
+    private void handleTestMessage(TestMessage message) {
         displayGui = !displayGui;
     }
 
