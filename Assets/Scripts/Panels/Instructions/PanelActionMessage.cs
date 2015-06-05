@@ -9,6 +9,8 @@ public class PanelActionMessage : CustomMessage {
     public int setId;
     public int variantIndex;
 
+    public PanelActionMessage() { }
+
     public PanelActionMessage(int setId, int variantNumber) {
         this.setId = setId;
         this.variantIndex = variantNumber;

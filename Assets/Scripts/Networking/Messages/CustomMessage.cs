@@ -7,6 +7,8 @@ using System.Collections.Generic;
 public class CustomMessage : MessageBase {
     private static Dictionary<short, Type> _idToType = new Dictionary<short, Type>();
 
+    public CustomMessage() { }
+
     public static short getMessageId(Type messageType) {
         int hashCode = Mathf.Abs(messageType.ToString().GetHashCode());
         int range = short.MaxValue - MsgType.Highest - 3;
@@ -27,8 +29,12 @@ public class CustomMessage : MessageBase {
         return id;
     }
 
-    public static void registerHandler<T>(Action<T> handlerDelegate) where T : CustomMessage{
-        NetworkServer.RegisterHandler(getMessageId(typeof(T)), message => handlerDelegate(message as T));
+    public static void registerHandler<T>(Action<T> handlerDelegate) where T : CustomMessage, new(){
+        NetworkServer.RegisterHandler(getMessageId(typeof(T)), message => {
+            T t = new T();
+            message.ReadMessage(t);
+            handlerDelegate(t);
+        });
     }
 
     public void sendToServer() {

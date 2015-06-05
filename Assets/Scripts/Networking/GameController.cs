@@ -14,5 +14,4 @@ public class GameController : NetworkBehaviour {
     private void handlePanelAction(PanelActionMessage panelAction) {
         _idToPanelActionSets[panelAction.setId].currentVariantIndex = panelAction.variantIndex;
     }
-
 }
