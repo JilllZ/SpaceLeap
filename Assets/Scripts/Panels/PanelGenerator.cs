@@ -12,18 +12,21 @@ public class PanelGenerator : MonoBehaviour {
     protected List<InteractionPanel> panelPrefabs;
 
     //Vars for generator for all players
-    private HashSet<string> _createdPanels = new HashSet<string>();
+    private static HashSet<string> _createdPanels = new HashSet<string>();
 
     //Vars for generation for a single player
-    private List<InteractionPanel> _panelsToChooseFrom = null;
-    private bool[,] _isCellFilled = new bool[CELLS_X, CELLS_Y];
-    private int emptyCells = 0;
+    private static List<InteractionPanel> _panelsToChooseFrom = null;
+    private static bool[,] _isCellFilled = new bool[CELLS_X, CELLS_Y];
+    private static int emptyCells = 0;
+
+    private static PanelGenerator _instance;
 
     void Awake() {
+        _instance = this;
         CustomMessage.registerClientHandler<CreatePanelMessage>(panelCreator);
     }
 
-    public List<List<CreatePanelMessage>> generateAllPanelsForAllPlayers(int playerCount) {
+    public static List<List<CreatePanelMessage>> generateAllPanelsForAllPlayers(int playerCount) {
         _createdPanels.Clear();
 
         List<List<CreatePanelMessage>> allPanelsForAllPlayers = new List<List<CreatePanelMessage>>();
@@ -35,10 +38,10 @@ public class PanelGenerator : MonoBehaviour {
         return allPanelsForAllPlayers;
     }
 
-    private List<CreatePanelMessage> generateAllPanelsForOnePlayer() {
+    private static List<CreatePanelMessage> generateAllPanelsForOnePlayer() {
         _isCellFilled.fill(() => false);
         _panelsToChooseFrom = new List<InteractionPanel>();
-        _panelsToChooseFrom.AddRange(panelPrefabs);
+        _panelsToChooseFrom.AddRange(_instance.panelPrefabs);
         emptyCells = CELLS_X * CELLS_Y;
 
         List<CreatePanelMessage> allPanelsForPlayer = new List<CreatePanelMessage>();
@@ -49,7 +52,7 @@ public class PanelGenerator : MonoBehaviour {
         return allPanelsForPlayer;
     }
 
-    private CreatePanelMessage createRandomPanel() {
+    private static CreatePanelMessage createRandomPanel() {
         InteractionPanel chosenPanel = null;
         int chosenX, chosenY;
         PanelActionSetBase chosenActionSet;
@@ -121,14 +124,14 @@ public class PanelGenerator : MonoBehaviour {
             }
         }
 
-        CreatePanelMessage creationMessage = new CreatePanelMessage(chosenActionSet, chosenX, chosenY, panelPrefabs.IndexOf(chosenPanel));
+        CreatePanelMessage creationMessage = new CreatePanelMessage(chosenActionSet, chosenX, chosenY, _instance.panelPrefabs.IndexOf(chosenPanel));
         return creationMessage;
     }
 
-    private void panelCreator(NetworkMessage message) {
+    private static void panelCreator(NetworkMessage message) {
         CreatePanelMessage panelMessage = message.ReadMessage<CreatePanelMessage>();
 
-        InteractionPanel newPanel = Instantiate<InteractionPanel>(panelPrefabs[panelMessage.prefabIndex]);
+        InteractionPanel newPanel = Instantiate<InteractionPanel>(_instance.panelPrefabs[panelMessage.prefabIndex]);
         newPanel.transform.position = new Vector3(panelMessage.x - (CELLS_X - 1) / 2.0f, panelMessage.y - (CELLS_Y - 1) / 2.0f, 0);
         newPanel.setActionSet(panelMessage.actionSet);
     }

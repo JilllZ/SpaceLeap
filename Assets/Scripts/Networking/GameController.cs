@@ -14,28 +14,29 @@ public class GameController : NetworkBehaviour {
 
     //List of all instructions currently being dispatched
     private List<ServerInstruction> _currentInstructions = new List<ServerInstruction>();
-
-    private IEnumerable<NetworkConnection> allConnections {
-        get {
-            return NetworkServer.localConnections.Concat(NetworkServer.connections).Where(c => c != null);
-        }
-    }
+    private int _startedClients = 0;
 
     [ServerCallback]
     void Awake() {
         //Register the handler for the panel actions coming from the clients
-        CustomMessage.registerServerHandler<PanelActionMessage>(handlePanelAction); 
+        CustomMessage.registerServerHandler<PanelActionMessage>(handlePanelAction);
+        CustomMessage.registerServerHandler<ClientStartGame>(onClientStartGame);
     }
 
-    [ServerCallback]
-    IEnumerator Start() {
-        //Hack, wait for response instead
-        yield return new WaitForSeconds(1.0f);
+    private void onClientStartGame(NetworkMessage message) {
+        _startedClients++;
+        if (_startedClients == CustomLobbyManager.allConnections.Count()) {
+            onAllClientsLoaded();
+        }
+    }
 
-        List<List<CreatePanelMessage>> allPanels = FindObjectOfType<PanelGenerator>().generateAllPanelsForAllPlayers(allConnections.Count());
+    private void onAllClientsLoaded() {
+        int playerCount = CustomLobbyManager.allConnections.Count();
+
+        List<List<CreatePanelMessage>> allPanels = PanelGenerator.generateAllPanelsForAllPlayers(playerCount);
+
         int index = 0;
-        foreach (NetworkConnection connection in allConnections) {
-            Debug.Log("sending panels to " + index);
+        foreach (NetworkConnection connection in CustomLobbyManager.allConnections) {
             foreach (CreatePanelMessage createPanelMessage in allPanels[index]) {
                 PanelActionSetBase actionSet = createPanelMessage.actionSet;
 
@@ -52,7 +53,7 @@ public class GameController : NetworkBehaviour {
             index++;
         }
 
-        foreach (var connection in allConnections) {
+        foreach (var connection in CustomLobbyManager.allConnections) {
             issueNewInstruction(connection.connectionId);
         }
     }
@@ -76,8 +77,8 @@ public class GameController : NetworkBehaviour {
 
     private void issueNewInstruction(int recieverConnectionId) {
         bool shouldPerformAsWell;
-        
-        if(allConnections.Count() == 1){
+
+        if (CustomLobbyManager.allConnections.Count() == 1) {
             shouldPerformAsWell = true;
         }else{
             shouldPerformAsWell = Random.value > instructionPerformerBias;
@@ -87,7 +88,7 @@ public class GameController : NetworkBehaviour {
         if (shouldPerformAsWell) {
             performerConnectionId = recieverConnectionId;
         } else {
-            performerConnectionId = (from connection in allConnections
+            performerConnectionId = (from connection in CustomLobbyManager.allConnections
                                      where connection.connectionId != recieverConnectionId
                                      select connection.connectionId).chooseRandom();
         }
