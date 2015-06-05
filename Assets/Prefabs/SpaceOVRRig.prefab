@@ -99,6 +99,8 @@ GameObject:
   - 114: {fileID: 11448378}
   - 114: {fileID: 11414128}
   - 114: {fileID: 11497402}
+  - 114: {fileID: 11441386}
+  - 114: {fileID: 11437588}
   m_Layer: 0
   m_Name: SpaceOVRRig
   m_TagString: Untagged
@@ -150,6 +152,22 @@ GameObject:
   m_Layer: 0
   m_Name: TrackerAnchor
   m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &193846
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 453982}
+  - 20: {fileID: 2034840}
+  m_Layer: 0
+  m_Name: GUICamera
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -215,8 +233,21 @@ Transform:
   - {fileID: 414228}
   - {fileID: 496312}
   - {fileID: 431124}
+  - {fileID: 453982}
   m_Father: {fileID: 478990}
   m_RootOrder: 1
+--- !u!4 &453982
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 193846}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 450638}
+  m_RootOrder: 3
 --- !u!4 &454198
 Transform:
   m_ObjectHideFlags: 1
@@ -336,6 +367,39 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
   m_StereoMirrorMode: 0
+--- !u!20 &2034840
+Camera:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 193846}
+  m_Enabled: 0
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: .300000012
+  far clip plane: 1000
+  field of view: 130
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_HDR: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: .0219999999
+  m_StereoMirrorMode: 0
 --- !u!23 &2322472
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -432,6 +496,50 @@ MonoBehaviour:
   resetTrackerOnLoad: 1
   monoscopic: 0
   hdr: 0
+--- !u!114 &11437588
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 137340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d33740c59043e034c90dd23fab130208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allSettingData:
+    _serializedKeys:
+    - Options
+    _serializedValues:
+    - friendlyName: Options
+      fullTypeName: Options
+      enabled: 1
+      fields:
+        _serializedKeys:
+        - quit
+        - recenter
+        - timewarp
+        - reload
+        _serializedValues:
+        - fieldName: quit
+          keyCode: 27
+        - fieldName: recenter
+          keyCode: 32
+        - fieldName: timewarp
+          keyCode: 116
+        - fieldName: reload
+          keyCode: 8
+--- !u!114 &11441386
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 137340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e0a82536a10d3b4680f6fc48f9a56d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11445132
 MonoBehaviour:
   m_ObjectHideFlags: 1
