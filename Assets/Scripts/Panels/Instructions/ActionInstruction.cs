@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ActionInstruction : IInstructionSet {
+public class ActionInstruction : InstructionSetBase {
     private string _actionInstruction;
 
     public ActionInstruction(string actionInstruction) {
         _actionInstruction = actionInstruction;
     }
 
-    public string getVariant(int variantIndex) {
+    public override string getVariant(int variantIndex) {
         return _actionInstruction;
     }
 
-    public int getVariantCount() {
+    public override int getVariantCount() {
         return 1;
     }
 }
