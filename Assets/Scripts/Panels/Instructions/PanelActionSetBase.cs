@@ -26,7 +26,7 @@ public abstract class PanelActionSetBase {
             return _panelLabel;
         }
     }
-    
+
     public abstract string getVariant(int variantIndex);
     public abstract int getVariantCount();
 

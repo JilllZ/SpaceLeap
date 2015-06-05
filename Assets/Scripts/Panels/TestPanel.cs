@@ -14,8 +14,9 @@ public class TestPanel : InteractionPanel {
     }
 
     public override void setActionSet(PanelActionSetBase actionSet) {
-        _chosenKeyCode = (KeyCode)((int)KeyCode.A + actionSet.panelLabel[0]);
-        GetComponent<Text>().text = actionSet.panelLabel;
+        base.setActionSet(actionSet);
+        _chosenKeyCode = (KeyCode)((int)KeyCode.A + (actionSet.panelLabel[0] - 'A'));
+        GetComponentInChildren<Text>().text = actionSet.panelLabel;
     }
 
     void Update() {

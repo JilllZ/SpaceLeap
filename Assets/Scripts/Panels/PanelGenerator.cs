@@ -9,13 +9,13 @@ public class PanelGenerator : MonoBehaviour {
     public const int CELLS_Y = 2;
 
     [SerializeField]
-    protected List<GameObject> panelPrefabs;
+    protected List<InteractionPanel> panelPrefabs;
 
     //Vars for generator for all players
     private HashSet<string> _createdPanels = new HashSet<string>();
 
     //Vars for generation for a single player
-    private Dictionary<InteractionPanel, GameObject> _panelsToChooseFrom = null;
+    private List<InteractionPanel> _panelsToChooseFrom = null;
     private bool[,] _isCellFilled = new bool[CELLS_X, CELLS_Y];
     private int emptyCells = 0;
 
@@ -37,49 +37,36 @@ public class PanelGenerator : MonoBehaviour {
 
     private List<CreatePanelMessage> generateAllPanelsForOnePlayer() {
         _isCellFilled.fill(() => false);
-
-        _panelsToChooseFrom = new Dictionary<InteractionPanel, GameObject>();
-        foreach(GameObject obj in panelPrefabs){
-            _panelsToChooseFrom[obj.GetComponentInChildren<InteractionPanel>()] = obj;
-        }
-
+        _panelsToChooseFrom = new List<InteractionPanel>();
+        _panelsToChooseFrom.AddRange(panelPrefabs);
         emptyCells = CELLS_X * CELLS_Y;
 
         List<CreatePanelMessage> allPanelsForPlayer = new List<CreatePanelMessage>();
         while (emptyCells != 0) {
-            int filledCells = 0;
-            CreatePanelMessage randomPanel = getRandomPanel(out filledCells);
-
-            emptyCells -= filledCells;
-            allPanelsForPlayer.Add(randomPanel);
-            _createdPanels.Add(randomPanel.actionSet.panelLabel);
+            allPanelsForPlayer.Add(createRandomPanel());
         }
 
         return allPanelsForPlayer;
     }
 
-    private CreatePanelMessage getRandomPanel(out int filledCells) {
+    private CreatePanelMessage createRandomPanel() {
         InteractionPanel chosenPanel = null;
-        GameObject chosenObj = null;
         int chosenX, chosenY;
         PanelActionSetBase chosenActionSet;
 
-        filledCells = 0;
-
         while(true) {
             float totalWeight = 0.0f;
-            foreach (InteractionPanel panel in _panelsToChooseFrom.Keys) {
+            foreach (InteractionPanel panel in _panelsToChooseFrom) {
                 totalWeight += panel.spawnWeight;
             }
 
             float r = Random.value * totalWeight;
-            foreach (var pair in _panelsToChooseFrom) {
-                if (pair.Key.spawnWeight > r) {
-                    chosenPanel = pair.Key;
-                    chosenObj = pair.Value;
+            foreach (InteractionPanel panel in _panelsToChooseFrom) {
+                if (panel.spawnWeight > r) {
+                    chosenPanel = panel;
                     break;
                 } else {
-                    r -= pair.Key.spawnWeight;
+                    r -= panel.spawnWeight;
                 }
             }
 
@@ -125,19 +112,24 @@ public class PanelGenerator : MonoBehaviour {
             break;
         };
 
-        filledCells = chosenPanel.dimensionY * chosenPanel.dimensionX;
+        emptyCells -= chosenPanel.dimensionY * chosenPanel.dimensionX;
+        _createdPanels.Add(chosenActionSet.panelLabel);
 
-        CreatePanelMessage creationMessage = new CreatePanelMessage(chosenActionSet, chosenX, chosenY, panelPrefabs.IndexOf(chosenObj));
+        for (int dx = 0; dx < chosenPanel.dimensionX; dx++) {
+            for (int dy = 0; dy < chosenPanel.dimensionY; dy++) {
+                _isCellFilled[chosenX + dx, chosenY + dy] = true;
+            }
+        }
+
+        CreatePanelMessage creationMessage = new CreatePanelMessage(chosenActionSet, chosenX, chosenY, panelPrefabs.IndexOf(chosenPanel));
         return creationMessage;
     }
 
     private void panelCreator(NetworkMessage message) {
         CreatePanelMessage panelMessage = message.ReadMessage<CreatePanelMessage>();
 
-        GameObject obj = (Instantiate(panelPrefabs[panelMessage.prefabIndex], new Vector3(panelMessage.x, panelMessage.y, 0), Quaternion.identity) as GameObject);
-        obj.SetActive(true);
-        InteractionPanel newPanel = obj.GetComponent<InteractionPanel>();
-        //TODO, use x and y to place
+        InteractionPanel newPanel = Instantiate<InteractionPanel>(panelPrefabs[panelMessage.prefabIndex]);
+        newPanel.transform.position = new Vector3(panelMessage.x - (CELLS_X - 1) / 2.0f, panelMessage.y - (CELLS_Y - 1) / 2.0f, 0);
         newPanel.setActionSet(panelMessage.actionSet);
     }
 }

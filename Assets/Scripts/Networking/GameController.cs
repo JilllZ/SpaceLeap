@@ -28,10 +28,14 @@ public class GameController : NetworkBehaviour {
     }
 
     [ServerCallback]
-    void Start() {
+    IEnumerator Start() {
+        //Hack, wait for response instead
+        yield return new WaitForSeconds(1.0f);
+
         List<List<CreatePanelMessage>> allPanels = FindObjectOfType<PanelGenerator>().generateAllPanelsForAllPlayers(allConnections.Count());
         int index = 0;
         foreach (NetworkConnection connection in allConnections) {
+            Debug.Log("sending panels to " + index);
             foreach (CreatePanelMessage createPanelMessage in allPanels[index]) {
                 PanelActionSetBase actionSet = createPanelMessage.actionSet;
 
