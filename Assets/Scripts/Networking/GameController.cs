@@ -14,23 +14,22 @@ public class GameController : NetworkBehaviour {
 
     //List of all instructions currently being dispatched
     private List<ServerInstruction> _currentInstructions = new List<ServerInstruction>();
-    private int _startedClients = 0;
-
+    
     [ServerCallback]
     void Awake() {
         //Register the handler for the panel actions coming from the clients
         CustomMessage.registerServerHandler<PanelActionMessage>(handlePanelAction);
-        CustomMessage.registerServerHandler<ClientStartGame>(onClientStartGame);
     }
 
-    private void onClientStartGame(NetworkMessage message) {
-        _startedClients++;
-        if (_startedClients == CustomLobbyManager.allConnections.Count()) {
-            onAllClientsLoaded();
+    void Start() {
+        StartCoroutine(waitForAllClientsToStart());
+    }
+
+    private IEnumerator waitForAllClientsToStart() {
+        while (!CustomLobbyManager.allClientsStarted) {
+            yield return null;
         }
-    }
 
-    private void onAllClientsLoaded() {
         int playerCount = CustomLobbyManager.allConnections.Count();
 
         List<List<CreatePanelMessage>> allPanels = PanelGenerator.generateAllPanelsForAllPlayers(playerCount);

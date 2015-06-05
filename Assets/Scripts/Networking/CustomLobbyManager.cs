@@ -7,10 +7,17 @@ using System.Collections.Generic;
 
 public class CustomLobbyManager : NetworkLobbyManager {
     private static NetworkClient _myClient;
+    private static int _startedClients = 0;
 
     public static NetworkClient myClient {
         get {
             return _myClient;
+        }
+    }
+
+    public static bool allClientsStarted {
+        get {
+            return _startedClients == allConnections.Count();
         }
     }
 
@@ -23,5 +30,21 @@ public class CustomLobbyManager : NetworkLobbyManager {
     public override void OnLobbyStartClient(NetworkClient client) {
         base.OnLobbyStartClient(client);
         _myClient = client;
+    }
+
+    public override void OnServerSceneChanged(string sceneName) {
+        base.OnServerSceneChanged(sceneName);
+        if (sceneName == lobbyScene) {
+            _startedClients = 0;
+        }
+    }
+
+    
+    void Start() {
+        CustomMessage.registerServerHandler<ClientStartGame>(onClientStartGame);
+    }
+
+    private void onClientStartGame(NetworkMessage message) {
+        _startedClients++;
     }
 }
