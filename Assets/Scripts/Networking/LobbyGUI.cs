@@ -10,12 +10,30 @@ public class LobbyGUI : NetworkMatch {
     public Button hostButton;
     public Button joinButton;
     public Button readyButton;
+    public Text playerList;
 
     private List<MatchDesc> _matchList = null;
     private bool _matchCreated = false;
 
     void Awake() {
         SetProgramAppID((AppID)1401);
+    }
+
+    void Start() {
+        StartCoroutine(updatePlayerList());
+    }
+
+    IEnumerator updatePlayerList() {
+        while (true) {
+            yield return new WaitForSeconds(0.5f);
+
+            playerList.text = "";
+            NetworkLobbyPlayer[] lobbyPlayers = FindObjectsOfType<NetworkLobbyPlayer>();
+            int i = 1;
+            foreach (NetworkLobbyPlayer player in lobbyPlayers) {
+                playerList.text += "Player " + i + " : " + (player.readyToBegin ? "Ready" : "Not Ready") + "\n";
+            }
+        }
     }
 
     public void hostRoom() {
@@ -52,6 +70,7 @@ public class LobbyGUI : NetworkMatch {
             FindObjectOfType<CustomLobbyManager>().StartHost(new MatchInfo(matchResponse));
             _matchCreated = true;
             readyButton.gameObject.SetActive(true);
+            playerList.transform.parent.gameObject.SetActive(true);
         } else {
             joinButton.gameObject.SetActive(true);
             hostButton.gameObject.SetActive(true);
@@ -90,5 +109,6 @@ public class LobbyGUI : NetworkMatch {
     private void onConnected(NetworkMessage message) {
         Debug.Log("Connected to match");
         readyButton.gameObject.SetActive(true);
+        playerList.transform.parent.gameObject.SetActive(true);
     }
 }
