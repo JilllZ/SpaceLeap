@@ -12,6 +12,8 @@ public class SwitchPanel : InteractionPanel {
     public Transform switchGraphic;
     public Text label;
 
+    public float range = 45;
+
     private HingeJoint _joint;
     private bool _prevOnState = false;
 
@@ -22,8 +24,8 @@ public class SwitchPanel : InteractionPanel {
 
     public override void setActionSet(PanelActionSetBase actionSet) {
         base.setActionSet(actionSet);
+        //switchBody.transform.localEulerAngles = new Vector3(actionSet.currentVariantIndex == 0 ? range : -range, 0, 0);
         label.text = _actionSet.panelLabel;
-        switchBody.transform.localEulerAngles = new Vector3(actionSet.currentVariantIndex == 0 ? 45 : -45, 0, 0);
     }
 
     void Awake() {
@@ -38,7 +40,7 @@ public class SwitchPanel : InteractionPanel {
             _prevOnState = isSwitchOn();
 
             JointSpring s = _joint.spring;
-            s.targetPosition = _prevOnState ? 45 : -45;
+            s.targetPosition = _prevOnState ? range : -range;
             _joint.spring = s;
 
             new PanelActionMessage(_actionSet.setId, _prevOnState ? 0 : 1).sendToServer();     

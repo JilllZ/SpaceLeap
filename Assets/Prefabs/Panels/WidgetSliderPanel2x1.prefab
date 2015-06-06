@@ -435,7 +435,7 @@ GameObject:
   - 4: {fileID: 407164}
   - 114: {fileID: 11409216}
   m_Layer: 0
-  m_Name: WidgetSliderPanel
+  m_Name: WidgetSliderPanel2x1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
