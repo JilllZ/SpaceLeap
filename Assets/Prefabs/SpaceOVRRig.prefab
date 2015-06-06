@@ -45,6 +45,7 @@ GameObject:
   - 20: {fileID: 2030830}
   - 114: {fileID: 11491742}
   - 114: {fileID: 11478664}
+  - 114: {fileID: 11475824}
   m_Layer: 0
   m_Name: LeftEyeAnchor
   m_TagString: Untagged
@@ -63,6 +64,7 @@ GameObject:
   - 20: {fileID: 2018238}
   - 114: {fileID: 11473954}
   - 114: {fileID: 11463012}
+  - 114: {fileID: 11496638}
   m_Layer: 0
   m_Name: RightEyeAnchor
   m_TagString: Untagged
@@ -319,7 +321,7 @@ Camera:
     height: 1
   near clip plane: .00999999978
   far clip plane: 1000
-  field of view: 60
+  field of view: 106
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -329,7 +331,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
-  m_HDR: 0
+  m_HDR: 1
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
@@ -352,7 +354,7 @@ Camera:
     height: 1
   near clip plane: .00999999978
   far clip plane: 1000
-  field of view: 60
+  field of view: 106
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -362,7 +364,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
-  m_HDR: 0
+  m_HDR: 1
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
@@ -373,7 +375,7 @@ Camera:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193846}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
@@ -385,10 +387,10 @@ Camera:
     height: 1
   near clip plane: .300000012
   far clip plane: 1000
-  field of view: 130
+  field of view: 106
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: -.0900000036
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -495,7 +497,7 @@ MonoBehaviour:
   freezeTimeWarp: 0
   resetTrackerOnLoad: 1
   monoscopic: 0
-  hdr: 0
+  hdr: 1
 --- !u!114 &11437588
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -660,6 +662,22 @@ MonoBehaviour:
   eye: 1
   syncMode: 1
   gammaCorrection: 1
+--- !u!114 &11475824
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 114982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c12500f3afdeb24d9444042960a4cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloomIntensity: .0500000007
+  shader: {fileID: 4800000, guid: 6581f8d2f208b8340b8d59c7bf38cc9a, type: 3}
+  lensDirtTexture: {fileID: 2800000, guid: a930089df33f96848ab34403b71a9aee, type: 3}
+  lensDirtIntensity: .0500000007
+  inputIsHDR: 0
 --- !u!114 &11478664
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -685,6 +703,22 @@ MonoBehaviour:
   eye: 0
   syncMode: 1
   gammaCorrection: 1
+--- !u!114 &11496638
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 127728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c12500f3afdeb24d9444042960a4cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloomIntensity: .0500000007
+  shader: {fileID: 4800000, guid: 6581f8d2f208b8340b8d59c7bf38cc9a, type: 3}
+  lensDirtTexture: {fileID: 2800000, guid: a930089df33f96848ab34403b71a9aee, type: 3}
+  lensDirtIntensity: .0500000007
+  inputIsHDR: 0
 --- !u!114 &11497402
 MonoBehaviour:
   m_ObjectHideFlags: 1
