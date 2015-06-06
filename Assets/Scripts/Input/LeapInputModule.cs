@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class LeapInputModule : PointerInputModule {
+    public Canvas relativeTo;
+
     private Dictionary<int, LeapTouch> _leapTouches = new Dictionary<int, LeapTouch>();
     private Camera _guiCamera;
 
@@ -222,6 +224,6 @@ public class LeapInputModule : PointerInputModule {
     }
 
     private bool doesTouch(LeapTouch leapTouch) {
-        return leapTouch.position.z >= 0.3f;
+        return relativeTo.transform.InverseTransformPoint(leapTouch.position).z > 0;
     }
 }

@@ -5,10 +5,11 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PanelGenerator : MonoBehaviour {
-    public const float CELL_SIZE = 0.2f;
-    public const float CELL_Z_OFFSET = 0.3f;
-    public const int CELLS_X = 4;
-    public const int CELLS_Y = 4;
+    public const float CELL_SIZE = 0.25f;
+    public const int CELLS_X = 6;
+    public const int CELLS_Y = 3;
+    public const int CONSOLE_WIDTH = 2;
+    public const int CONSOLE_HEIGHT = 2;
 
     [SerializeField]
     protected List<InteractionPanel> panelPrefabs;
@@ -40,11 +41,24 @@ public class PanelGenerator : MonoBehaviour {
         return allPanelsForAllPlayers;
     }
 
-    private static List<CreatePanelMessage> generateAllPanelsForOnePlayer() {
+    private static void resetCells() {
         _isCellFilled.fill(() => false);
+        emptyCells = CELLS_X * CELLS_Y;
+        emptyCells -= CONSOLE_HEIGHT * CONSOLE_WIDTH;
+
+        int x = CELLS_X / 2 - CONSOLE_WIDTH / 2;
+        int y = 0;
+        for (int dx = 0; dx < CONSOLE_WIDTH; dx++) {
+            for (int dy = 0; dy < CONSOLE_HEIGHT; dy++) {
+                _isCellFilled[x + dx, y + dy] = true;
+            }
+        }
+    }
+
+    private static List<CreatePanelMessage> generateAllPanelsForOnePlayer() {    
         _panelsToChooseFrom = new List<InteractionPanel>();
         _panelsToChooseFrom.AddRange(_instance.panelPrefabs);
-        emptyCells = CELLS_X * CELLS_Y;
+        resetCells();
 
         List<CreatePanelMessage> allPanelsForPlayer = new List<CreatePanelMessage>();
         while (emptyCells != 0) {
@@ -136,16 +150,54 @@ public class PanelGenerator : MonoBehaviour {
         CreatePanelMessage panelMessage = message.ReadMessage<CreatePanelMessage>();
 
         InteractionPanel newPanel = Instantiate<InteractionPanel>(_instance.panelPrefabs[panelMessage.prefabIndex]);
+        Vector3 pos = Vector3.zero;
+        Quaternion rot = Quaternion.identity;
+        getCellCenter(panelMessage.x, panelMessage.y, newPanel.dimensionX, newPanel.dimensionY, out pos, out rot);
+        newPanel.transform.position = pos;
+        newPanel.transform.rotation = rot;
 
+        newPanel.setActionSet(panelMessage.actionSet);
+    }
+
+    private static void getCellCenter(int x, int y, int width, int height, out Vector3 center, out Quaternion rotation) {
         float leftMostCellCenter = (-(CELLS_X - 1) / 2.0f - 0.5f) * CELL_SIZE;
         float downMostCellCenter = (-(CELLS_Y - 1) / 2.0f - 0.5f) * CELL_SIZE;
 
-        float panelX = (panelMessage.x + newPanel.dimensionX / 2.0f) * CELL_SIZE;
-        float panelY = (panelMessage.y + newPanel.dimensionY / 2.0f) * CELL_SIZE;
-        float panelZ = CELL_Z_OFFSET;
+        float panelX = (x + width / 2.0f) * CELL_SIZE;
+        float panelY = (y + height / 2.0f) * CELL_SIZE;
+        float panelZ = 0;
 
-        newPanel.transform.position = new Vector3(panelX + leftMostCellCenter, panelY + downMostCellCenter, panelZ);
+        //Vector3 p = new Vector3(panelX + leftMostCellCenter, panelY + downMostCellCenter, panelZ) + _instance.transform.position;
 
-        newPanel.setActionSet(panelMessage.actionSet);
+        float larger = 0.4f;
+        center = new Vector3(0, panelY + downMostCellCenter, larger) + _instance.transform.position;
+
+        rotation = Quaternion.Euler(0, (panelX + leftMostCellCenter) * 70, 0);
+        center = rotation * center;
+
+        center = center - new Vector3(0, 0, larger);
+    }
+
+    void OnDrawGizmos() {
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireCube(transform.position, new Vector3(CELLS_X, CELLS_Y, 0) * CELL_SIZE);
+
+        if (_instance == null) {
+            _instance = FindObjectOfType<PanelGenerator>();
+        }
+
+        if (!Application.isPlaying) {
+            Gizmos.color = Color.green;
+
+            resetCells();
+
+            for (int x = 0; x < CELLS_X; x++) {
+                for (int y = 0; y < CELLS_Y; y++) {
+                    if (!_isCellFilled[x, y]) {
+                        //Gizmos.DrawWireCube(getCellCenter(x, y, 1, 1), new Vector3(1, 1, 0) * CELL_SIZE);
+                    }
+                }
+            }
+        }
     }
 }
