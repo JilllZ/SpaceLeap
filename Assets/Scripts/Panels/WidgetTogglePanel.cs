@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using LMWidgets;
 
 public class WidgetTogglePanel : InteractionPanel {
-    private const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private const int VARIANT_ON = 0;
     private const int VARIANT_OFF = 1;
 
@@ -13,8 +12,16 @@ public class WidgetTogglePanel : InteractionPanel {
     public ButtonToggleBase button;
 
     public override PanelActionSetBase createViableActionSet(HashSet<string> existingLabels) {
-        char randomChar = ALPHABET.chooseRandom(c => !existingLabels.Contains(c.ToString()));
-        return new ReplacementPanelActionSet(randomChar.ToString(), "Turn " + randomChar + " #", "On", "Off");
+        string[] toggleOpts = {
+          "Emergency Nose Landing",
+          "Main Screen",
+          "Hydraulic Power Drive Unit",
+          "Leap",
+          "Autowiring",
+          "Tracking"
+        };
+        string buttonName = toggleOpts.chooseRandom(str => !existingLabels.Contains(str));
+        return new ReplacementPanelActionSet(buttonName, "Turn " + buttonName + " #", "On", "Off");
     }
 
     public override void setActionSet(PanelActionSetBase actionSet) {
