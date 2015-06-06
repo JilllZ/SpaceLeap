@@ -5,11 +5,11 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PanelGenerator : MonoBehaviour {
-    public const float CELL_SIZE = 0.25f;
-    public const int CELLS_X = 6;
-    public const int CELLS_Y = 3;
-    public const int CONSOLE_WIDTH = 2;
-    public const int CONSOLE_HEIGHT = 2;
+    public const float CELL_SIZE = 0.13f;
+    public const int CELLS_X = 7;
+    public const int CELLS_Y = 5;
+    public const int CONSOLE_WIDTH = 3;
+    public const int CONSOLE_HEIGHT = 3;
 
     [SerializeField]
     protected List<InteractionPanel> panelPrefabs;
@@ -194,7 +194,10 @@ public class PanelGenerator : MonoBehaviour {
             for (int x = 0; x < CELLS_X; x++) {
                 for (int y = 0; y < CELLS_Y; y++) {
                     if (!_isCellFilled[x, y]) {
-                        //Gizmos.DrawWireCube(getCellCenter(x, y, 1, 1), new Vector3(1, 1, 0) * CELL_SIZE);
+                        Vector3 p;
+                        Quaternion r;
+                        getCellCenter(x, y, 1, 1, out p, out r);
+                        Gizmos.DrawWireCube(p, r * new Vector3(1, 1, 0) * CELL_SIZE);
                     }
                 }
             }

@@ -285,7 +285,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 137340}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: .779999971, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 478990}
@@ -555,9 +555,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   separateLeftRight: 1
   leftGraphicsModel: {fileID: 11400008, guid: e9fcde724db27af479a62244440b8b18, type: 2}
-  leftPhysicsModel: {fileID: 11460542, guid: dc02f2d83c1ac4b4d9b4ec82df1b1732, type: 2}
+  leftPhysicsModel: {fileID: 11400008, guid: d1ee2987e72174f659cdf5447ad5403c, type: 2}
   rightGraphicsModel: {fileID: 11400006, guid: 38c9cece84724db4c9a5bfcbdf2e2115, type: 2}
-  rightPhysicsModel: {fileID: 11460542, guid: dc02f2d83c1ac4b4d9b4ec82df1b1732, type: 2}
+  rightPhysicsModel: {fileID: 11400008, guid: d1ee2987e72174f659cdf5447ad5403c, type: 2}
   handParent: {fileID: 450638}
   toolModel: {fileID: 0}
   isHeadMounted: 1
@@ -677,7 +677,7 @@ MonoBehaviour:
   shader: {fileID: 4800000, guid: 6581f8d2f208b8340b8d59c7bf38cc9a, type: 3}
   lensDirtTexture: {fileID: 2800000, guid: a930089df33f96848ab34403b71a9aee, type: 3}
   lensDirtIntensity: .0500000007
-  inputIsHDR: 0
+  inputIsHDR: 1
 --- !u!114 &11478664
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -718,7 +718,7 @@ MonoBehaviour:
   shader: {fileID: 4800000, guid: 6581f8d2f208b8340b8d59c7bf38cc9a, type: 3}
   lensDirtTexture: {fileID: 2800000, guid: a930089df33f96848ab34403b71a9aee, type: 3}
   lensDirtIntensity: .0500000007
-  inputIsHDR: 0
+  inputIsHDR: 1
 --- !u!114 &11497402
 MonoBehaviour:
   m_ObjectHideFlags: 1
