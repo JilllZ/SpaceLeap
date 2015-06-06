@@ -97,18 +97,16 @@ public class LobbyGUI : NetworkMatch {
                 Debug.LogWarning("Match already set up.... aborting");
                 return;
             }
+
             Utility.SetAccessTokenForNetwork(joinResponse.networkId, new UnityEngine.Networking.Types.NetworkAccessToken(joinResponse.accessTokenString));
             FindObjectOfType<CustomLobbyManager>().StartClient(new MatchInfo(joinResponse));
+
+            readyButton.gameObject.SetActive(true);
+            playerList.transform.parent.gameObject.SetActive(true);
         } else {
             joinButton.gameObject.SetActive(true);
             hostButton.gameObject.SetActive(true);
             Debug.LogError("Failed to join match");
         }
-    }
-
-    private void onConnected(NetworkMessage message) {
-        Debug.Log("Connected to match");
-        readyButton.gameObject.SetActive(true);
-        playerList.transform.parent.gameObject.SetActive(true);
     }
 }
