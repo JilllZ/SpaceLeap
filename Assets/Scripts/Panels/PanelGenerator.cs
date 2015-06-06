@@ -5,8 +5,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PanelGenerator : MonoBehaviour {
-    public const int CELLS_X = 3;
-    public const int CELLS_Y = 2;
+    public const float CELL_SIZE = 0.2f;
+    public const float CELL_Z_OFFSET = 0.3f;
+    public const int CELLS_X = 4;
+    public const int CELLS_Y = 4;
 
     [SerializeField]
     protected List<InteractionPanel> panelPrefabs;
@@ -134,7 +136,16 @@ public class PanelGenerator : MonoBehaviour {
         CreatePanelMessage panelMessage = message.ReadMessage<CreatePanelMessage>();
 
         InteractionPanel newPanel = Instantiate<InteractionPanel>(_instance.panelPrefabs[panelMessage.prefabIndex]);
-        newPanel.transform.position = new Vector3(panelMessage.x - (CELLS_X - 1) / 2.0f, panelMessage.y - (CELLS_Y - 1) / 2.0f, 0);
+
+        float leftMostCellCenter = (-(CELLS_X - 1) / 2.0f - 0.5f) * CELL_SIZE;
+        float downMostCellCenter = (-(CELLS_Y - 1) / 2.0f - 0.5f) * CELL_SIZE;
+
+        float panelX = (panelMessage.x + newPanel.dimensionX / 2.0f) * CELL_SIZE;
+        float panelY = (panelMessage.y + newPanel.dimensionY / 2.0f) * CELL_SIZE;
+        float panelZ = CELL_Z_OFFSET;
+
+        newPanel.transform.position = new Vector3(panelX + leftMostCellCenter, panelY + downMostCellCenter, panelZ);
+
         newPanel.setActionSet(panelMessage.actionSet);
     }
 }

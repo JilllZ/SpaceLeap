@@ -18,4 +18,9 @@ public abstract class InteractionPanel : MonoBehaviour {
     }
 
     public abstract PanelActionSetBase createViableActionSet(HashSet<string> existingLabels);
+
+    void OnDrawGizmos() {
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireCube(transform.position, new Vector3(dimensionX, dimensionY, 0) * PanelGenerator.CELL_SIZE);
+    }
 }
