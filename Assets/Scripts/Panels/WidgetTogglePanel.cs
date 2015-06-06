@@ -20,6 +20,7 @@ public class WidgetTogglePanel : InteractionPanel {
           "Autowiring",
           "Tracking"
         };
+        // FIXME: with less than three items, will fail and say awaiting instructions
         string buttonName = toggleOpts.chooseRandom(str => !existingLabels.Contains(str));
         return new ReplacementPanelActionSet(buttonName, "Turn " + buttonName + " #", "On", "Off");
     }
