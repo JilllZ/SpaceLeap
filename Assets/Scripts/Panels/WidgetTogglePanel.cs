@@ -22,7 +22,14 @@ public class WidgetTogglePanel : InteractionPanel {
         };
         // FIXME: with less than three items, will fail and say awaiting instructions
         string buttonName = toggleOpts.chooseRandom(str => !existingLabels.Contains(str));
-        return new ReplacementPanelActionSet(buttonName, "Turn " + buttonName + " #", "On", "Off");
+        string actionText;
+        if (string.Compare(buttonName, "Main Screen") == 0) {
+          actionText = "Main Screen Turn #";
+        } else {
+          actionText = "Turn " + buttonName + " #";
+        }
+
+        return new ReplacementPanelActionSet(buttonName, actionText, "On", "Off");
     }
 
     public override void setActionSet(PanelActionSetBase actionSet) {
