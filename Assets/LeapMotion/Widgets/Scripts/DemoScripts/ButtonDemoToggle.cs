@@ -27,8 +27,8 @@ public class ButtonDemoToggle : ButtonToggleBase
 
   private void TurnsOnGraphics()
   {
-    onGraphics.SetActive(true);
     offGraphics.SetActive(false);
+    onGraphics.SetActive(true);
 	midGraphics.SetColor(MidGraphicsOnColor);
 	botGraphics.SetColor(BotGraphicsOnColor);
   }

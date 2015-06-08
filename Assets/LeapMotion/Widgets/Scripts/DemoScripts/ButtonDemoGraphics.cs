@@ -20,11 +20,11 @@ public class ButtonDemoGraphics : MonoBehaviour
 		foreach(Image image in GUIimages){
 			image.enabled = status;
 		}
-		
 	}
 	
 	public void SetColor(Color color)
 	{
+
 		Renderer[] renderers = GetComponentsInChildren<Renderer>();
 		Text[] texts = GetComponentsInChildren<Text>();
 		Image[] GUIimages = GetComponentsInChildren<Image>();

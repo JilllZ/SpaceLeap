@@ -435,7 +435,7 @@ GameObject:
   - 4: {fileID: 407164}
   - 114: {fileID: 11409216}
   m_Layer: 0
-  m_Name: WidgetSliderPanel
+  m_Name: WidgetSliderPanel2x1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -487,8 +487,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 195616}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -.174700007, z: .354999989}
-  m_LocalScale: {x: .049999997, y: .0500000045, z: .049999997}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: .0302713644, y: .030271396, z: .0302713905}
   m_Children:
   - {fileID: 439694}
   - {fileID: 400926}
@@ -891,7 +891,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 105666}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
@@ -1101,8 +1101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b03ce017d5a0521439eb21bc66bd0356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnWeight: 100
-  dimensionX: 3
+  spawnWeight: 1
+  dimensionX: 2
   dimensionY: 1
   dotRange: {x: 3, y: 3}
   label: {fileID: 11482148}
@@ -1163,8 +1163,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 80
+    m_Font: {fileID: 12800000, guid: 2eab921198154ec4e934bfe68d06d984, type: 3}
+    m_FontSize: 111
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -1173,7 +1173,7 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
+    m_LineSpacing: 1.09000003
   m_Text: 10
 --- !u!114 &11440390
 MonoBehaviour:
@@ -1393,7 +1393,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: spawnWeight
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 195616}
