@@ -339,9 +339,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 849b323b3a821d448968369b2276d214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnWeight: 1.26999998
+  spawnWeight: 2
   dimensionX: 2
   dimensionY: 2
+  backPanelPrefabs:
+  - {fileID: 172180, guid: 5d2e01a805589a74892e80ae28c51f93, type: 2}
   label: {fileID: 11489590}
   button: {fileID: 11412438}
 --- !u!114 &11489590
@@ -436,8 +438,12 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: backPanelPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: spawnWeight
-      value: 1.26999998
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -515,12 +515,15 @@ MonoBehaviour:
   spawnWeight: 1
   dimensionX: 1
   dimensionY: 1
+  backPanelPrefabs:
+  - {fileID: 128322, guid: 3c503b9783cf1f64d9da149975ec1766, type: 2}
   lightRenderer: {fileID: 2385262}
   onColor: {r: 0, g: 1, b: .131034613, a: 0}
   offColor: {r: .0163285881, g: .102941155, b: 0, a: 0}
   switchBody: {fileID: 460336}
   switchGraphic: {fileID: 428338}
   label: {fileID: 11405190}
+  range: 45
 --- !u!135 &13532790
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -598,6 +601,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: backPanelPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: spawnWeight
       value: 1

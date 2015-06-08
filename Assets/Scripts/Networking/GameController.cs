@@ -19,10 +19,16 @@ public class GameController : NetworkBehaviour {
     void Awake() {
         //Register the handler for the panel actions coming from the clients
         CustomMessage.registerServerHandler<PanelActionMessage>(handlePanelAction);
+        CustomMessage.registerServerHandler<InstructionMissed>(handleMissedInstruction);
     }
 
     void Start() {
         StartCoroutine(waitForAllClientsToStart());
+    }
+
+    private void handleMissedInstruction(NetworkMessage message) {
+        issueNewInstruction(message.conn.connectionId);
+        new ProgressMessage(-1).sendToAllClients();
     }
 
     private IEnumerator waitForAllClientsToStart() {
@@ -70,6 +76,7 @@ public class GameController : NetworkBehaviour {
         if (satisfiedInstruction != null) {
             issueNewInstruction(satisfiedInstruction.instructionReaderConnection);
             _currentInstructions.Remove(satisfiedInstruction);
+            new ProgressMessage(1).sendToAllClients();
         }
 
     }

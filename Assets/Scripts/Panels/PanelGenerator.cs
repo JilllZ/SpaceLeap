@@ -6,10 +6,10 @@ using System.Collections.Generic;
 
 public class PanelGenerator : MonoBehaviour {
     public const float CELL_SIZE = 0.13f;
-    public const int CELLS_X = 7;
+    public const int CELLS_X = 4;
     public const int CELLS_Y = 5;
-    public const int CONSOLE_WIDTH = 3;
-    public const int CONSOLE_HEIGHT = 3;
+    public const int CONSOLE_WIDTH = 2;
+    public const int CONSOLE_HEIGHT = 1;
 
     [SerializeField]
     protected List<InteractionPanel> panelPrefabs;
@@ -165,14 +165,13 @@ public class PanelGenerator : MonoBehaviour {
 
         float panelX = (x + width / 2.0f) * CELL_SIZE;
         float panelY = (y + height / 2.0f) * CELL_SIZE;
-        float panelZ = 0;
 
         //Vector3 p = new Vector3(panelX + leftMostCellCenter, panelY + downMostCellCenter, panelZ) + _instance.transform.position;
 
         float larger = 0.4f;
         center = new Vector3(0, panelY + downMostCellCenter, larger) + _instance.transform.position;
 
-        rotation = Quaternion.Euler(0, (panelX + leftMostCellCenter) * 70, 0);
+        rotation = Quaternion.Euler(0, (panelX + leftMostCellCenter) * 72, 0);
         center = rotation * center;
 
         center = center - new Vector3(0, 0, larger);
