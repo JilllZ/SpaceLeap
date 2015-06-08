@@ -18,6 +18,36 @@ public class SwitchPanel : InteractionPanel {
     private bool _prevOnState = false;
 
     public override PanelActionSetBase createViableActionSet(HashSet<string> existingLabels) {
+        string[] toggleOpts = {
+          "Vector Control",
+          "Husband",
+          "C++11",
+          "Nelder-Mead",
+          "Optical Flow",
+          "Tachyon Particles",
+          "Pineapple Cutter",
+          "Radio Cylon",
+          "Light Cylon",
+          "Nightcrawler",
+          "Mantis",
+          "Meadowhawk",
+          "Ab Wheel",
+          "Headphones",
+          "Dragonfly",
+          "Bison",
+          "Team-Building",
+          "Upper Management",
+          "Actuator",
+          "Caveat",
+          "Galaxy Note 4",
+          "Urgency",
+          "Phone Tracking",
+          "Accounting",
+          "Servoactuator Anti-Skid Valves",
+          "Japanese Selvedge Jeans"
+        };
+        string buttonName = toggleOpts.chooseRandom(str => !existingLabels.Contains(str));
+        string actionText = "Turn " + buttonName + " #";
         char randomChar = ALPHABET.chooseRandom(c => !existingLabels.Contains(c.ToString()));
         return new ReplacementPanelActionSet(randomChar.ToString(), "Turn " + randomChar + " #", "On", "Off");
     }
