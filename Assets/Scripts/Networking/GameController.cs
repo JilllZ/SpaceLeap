@@ -21,22 +21,28 @@ public class GameController : NetworkBehaviour {
         //Register the handler for the panel actions coming from the clients
         CustomMessage.registerServerHandler<PanelActionMessage>(handlePanelAction);
         CustomMessage.registerServerHandler<InstructionMissed>(handleMissedInstruction);
+        CustomMessage.registerServerHandler<WinMessage>(handleWinMessage);
+        CustomMessage.registerServerHandler<LossMessage>(handleLossMessage);
     }
 
     void Start() {
         StartCoroutine(waitForAllClientsToStart());
     }
 
-    private void handleMissedInstruction(NetworkMessage message) {
-        issueNewInstruction(message.conn.connectionId);
-        new ProgressMessage(-1).sendToAllClients();
-    }
-
-    private IEnumerator waitForAllClientsToStart() {
-        while (!CustomLobbyManager.allClientsStarted) {
-            yield return null;
+    private void handleWinMessage(NetworkMessage message) {
+        if (!_canInstruct) {
+            return;
         }
 
+        _currentInstructions.Clear();
+        _canInstruct = false;
+
+        new DisplayInstructionMessage("Air Space!", false).sendToAllClients();
+        StartCoroutine(nextLevelCoroutine(5.0f));
+    }
+
+    private IEnumerator nextLevelCoroutine(float extraWait = 0.0f) {
+        yield return new WaitForSeconds(extraWait);
         int playerCount = CustomLobbyManager.allConnections.Count();
 
         List<List<CreatePanelMessage>> allPanels = PanelGenerator.generateAllPanelsForAllPlayers(playerCount);
@@ -65,6 +71,36 @@ public class GameController : NetworkBehaviour {
         foreach (var connection in CustomLobbyManager.allConnections) {
             issueNewInstruction(connection.connectionId);
         }
+    }
+
+    private void handleLossMessage(NetworkMessage message) {
+        if (!_canInstruct) {
+            return;
+        }
+
+        _currentInstructions.Clear();
+        _canInstruct = false;
+
+        new DisplayInstructionMessage("Failure", false).sendToAllClients();
+        StartCoroutine(goBackToLobbyCoroutine());
+    }
+
+    private IEnumerator goBackToLobbyCoroutine() {
+        yield return new WaitForSeconds(5.0f);
+        CustomLobbyManager.instance.ServerReturnToLobby();
+    }
+
+    private void handleMissedInstruction(NetworkMessage message) {
+        issueNewInstruction(message.conn.connectionId);
+        new ProgressMessage(-1).sendToAllClients();
+    }
+
+    private IEnumerator waitForAllClientsToStart() {
+        while (!CustomLobbyManager.allClientsStarted) {
+            yield return null;
+        }
+
+        StartCoroutine(nextLevelCoroutine());
     }
 
     private void handlePanelAction(NetworkMessage message) {
@@ -128,7 +164,7 @@ public class GameController : NetworkBehaviour {
 
         string instructionText = randomPanelActionSet.getVariant(randomVariant);
 
-        DisplayInstructionMessage displayInstructionMessage = new DisplayInstructionMessage(instructionText);
+        DisplayInstructionMessage displayInstructionMessage = new DisplayInstructionMessage(instructionText, true);
         displayInstructionMessage.sendToClient(recieverConnectionId);
     }
 }

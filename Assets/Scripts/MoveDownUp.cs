@@ -18,5 +18,13 @@ public class MoveDownUp : MonoBehaviour {
     void Update() {
         transform.position = Vector3.Lerp(_lowLocation, _highLocation, Mathf.Pow(_transition, 3.0f));
         _transition = Mathf.MoveTowards(_transition, _destination, Time.deltaTime / TIME);
+
+        if (_transition == 1.0f) {
+            Destroy(gameObject);
+        }
+    }
+
+    public void moveUp() {
+        _destination = 1.0f;
     }
 }

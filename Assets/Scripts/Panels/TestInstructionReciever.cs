@@ -22,8 +22,17 @@ public class TestInstructionReciever : MonoBehaviour {
     }
 
     private void instructionHandler(NetworkMessage message) {
-        GetComponent<Text>().text = message.ReadMessage<DisplayInstructionMessage>().instruction;
-        enabled = true;
+        DisplayInstructionMessage mm = message.ReadMessage<DisplayInstructionMessage>();
+        GetComponent<Text>().text = mm.instruction;
+
+        if(mm.startTimer){
+            enabled = true;
+            slider.value = 1.0f;
+        }
+    }
+
+    public void disable() {
         slider.value = 1.0f;
+        enabled = false;
     }
 }
