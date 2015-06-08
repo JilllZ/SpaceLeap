@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using LMWidgets;
 
 public class WidgetTogglePanel : InteractionPanel {
-    private const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
     private const int VARIANT_ON = 0;
     private const int VARIANT_OFF = 1;
 
@@ -42,9 +40,30 @@ public class WidgetTogglePanel : InteractionPanel {
         return new ReplacementPanelActionSet(buttonName, actionText, "On", "Off");
     }
 
+    string[] _pushActions = { "Uninstal #Oculus Runtime",
+                              "Restart #Leap Service",
+                              "Tune #The Parameters",
+                              "Divide By #Zero",
+                              "Exrapolate #The Data",
+                              "Jump To #Conclusions",
+                              "Refactor #Autowiring",
+                              "Refactor #Platform",
+                              "Create A New #Ticket",
+                              "Expand #The Scope",
+                              "File A #Bug Report",
+                              "Polish The #Lense",
+                              "Charge The #Hoverboard",
+                              "Cut The #Feature",
+                              "Blame #Git",
+                              "Reinstall #Windows",
+                              "Delete The #Config File",
+                              "Call #Unity Tech Support",
+                              "Ring The #Lunch Bell",
+                              "Clean #Davids Desk"};
     private PanelActionSetBase getPushSet(HashSet<string> existingLabels) {
-        char randomChar = ALPHABET.chooseRandom(c => !existingLabels.Contains(c.ToString()));
-        return new SinglePanelActionSet(randomChar.ToString(), "Push " + randomChar);
+        string action = _pushActions.chooseRandom(ar => !existingLabels.Contains(ar.Split('#')[1]));
+        string[] splitAction = action.Split('#');
+        return new SinglePanelActionSet(splitAction[1], splitAction[0] + splitAction[1]);
     }
 
     public override void setActionSet(PanelActionSetBase actionSet) {
