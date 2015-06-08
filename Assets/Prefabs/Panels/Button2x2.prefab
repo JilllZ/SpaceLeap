@@ -218,7 +218,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 7e9a4d29f230d394b87ab2758482a98f, type: 2}
+  - {fileID: 2100000, guid: 403ad80c8593a69458c64eaa886fdd4f, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -351,7 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 849b323b3a821d448968369b2276d214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnWeight: 2
+  spawnWeight: 10
   dimensionX: 2
   dimensionY: 2
   backPanelPrefabs:
@@ -455,7 +455,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: spawnWeight
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
