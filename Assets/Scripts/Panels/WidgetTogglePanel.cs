@@ -37,7 +37,7 @@ public class WidgetTogglePanel : InteractionPanel {
           "Pongo",
           "Simulator",
           "HOPS",
-          "Air Conditioning",
+          "Weekend Air Conditioning",
           "Microwave",
           "LED",
           "HDMI",
