@@ -9,6 +9,14 @@ public class CustomLobbyManager : NetworkLobbyManager {
     private static NetworkClient _myClient;
     private static int _startedClients = 0;
 
+    private static CustomLobbyManager _instance;
+
+    public static CustomLobbyManager instance {
+        get {
+            return _instance;
+        }
+    }
+
     public static NetworkClient myClient {
         get {
             return _myClient;
@@ -41,6 +49,7 @@ public class CustomLobbyManager : NetworkLobbyManager {
 
     
     void Start() {
+        _instance = this;
         CustomMessage.registerServerHandler<ClientStartGame>(onClientStartGame);
     }
 

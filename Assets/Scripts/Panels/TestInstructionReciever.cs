@@ -4,16 +4,17 @@ using UnityEngine.Networking;
 using System.Collections;
 
 public class TestInstructionReciever : MonoBehaviour {
-    public float instructionTime = 8.0f;
+    public const float INSTRUCTION_TIME = 10.0f;
     public Slider slider;
 
     void Awake() {
         CustomMessage.registerClientHandler<DisplayInstructionMessage>(instructionHandler);
-        slider.value = 0.0f;
+        slider.value = 1.0f;
+        enabled = false;
     }
 
     void Update() {
-        slider.value = Mathf.MoveTowards(slider.value, 0.0f, Time.deltaTime / instructionTime);
+        slider.value = Mathf.MoveTowards(slider.value, 0.0f, Time.deltaTime / INSTRUCTION_TIME);
         if (slider.value <= 0.0f) {
             new InstructionMissed().sendToServer();
             enabled = false;
@@ -21,8 +22,19 @@ public class TestInstructionReciever : MonoBehaviour {
     }
 
     private void instructionHandler(NetworkMessage message) {
-        GetComponent<Text>().text = message.ReadMessage<DisplayInstructionMessage>().instruction;
-        enabled = true;
+        DisplayInstructionMessage mm = message.ReadMessage<DisplayInstructionMessage>();
+        GetComponent<Text>().text = mm.instruction;
+
         slider.value = 1.0f;
+        if(mm.startTimer){
+            enabled = true;
+        } else {
+            enabled = false;
+        }
+    }
+
+    public void disable() {
+        slider.value = 1.0f;
+        enabled = false;
     }
 }

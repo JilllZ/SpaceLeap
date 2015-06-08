@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 432644}
   - 114: {fileID: 11408986}
+  - 114: {fileID: 11457156}
   m_Layer: 0
   m_Name: Valve2x2
   m_TagString: Untagged
@@ -301,7 +302,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 403ad80c8593a69458c64eaa886fdd4f, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -421,7 +422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56de09f37d5931b4bac5a9427f0fce0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnWeight: 2
+  spawnWeight: 10
   dimensionX: 2
   dimensionY: 2
   backPanelPrefabs:
@@ -433,6 +434,17 @@ MonoBehaviour:
   switchGraphic: {fileID: 477824}
   label: {fileID: 11477526}
   range: 90
+--- !u!114 &11457156
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 123494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e047650f8eddad94dbf5b94334f05d95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11466316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -469,14 +481,14 @@ MonoBehaviour:
   m_Color: {r: 1, g: .724137962, b: 0, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 2eab921198154ec4e934bfe68d06d984, type: 3}
-    m_FontSize: 43
+    m_FontSize: 33
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 4
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: This Label So Much
@@ -545,8 +557,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 260, y: 70}
+  m_AnchoredPosition: {x: 0, y: -3.4999876}
+  m_SizeDelta: {x: 260, y: 87}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22493162
 RectTransform:
@@ -579,7 +591,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: spawnWeight
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

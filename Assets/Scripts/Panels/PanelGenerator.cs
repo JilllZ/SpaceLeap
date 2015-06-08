@@ -7,9 +7,9 @@ using System.Collections.Generic;
 public class PanelGenerator : MonoBehaviour {
     public const float CELL_SIZE = 0.13f;
     public const int CELLS_X = 4;
-    public const int CELLS_Y = 5;
+    public const int CELLS_Y = 4;
     public const int CONSOLE_WIDTH = 2;
-    public const int CONSOLE_HEIGHT = 1;
+    public const int CONSOLE_HEIGHT = 0;
 
     [SerializeField]
     protected List<InteractionPanel> panelPrefabs;
@@ -171,7 +171,7 @@ public class PanelGenerator : MonoBehaviour {
         float larger = 0.4f;
         center = new Vector3(0, panelY + downMostCellCenter, larger) + _instance.transform.position;
 
-        rotation = Quaternion.Euler(0, (panelX + leftMostCellCenter) * 72, 0);
+        rotation = Quaternion.Euler(0, (panelX + leftMostCellCenter) * 75, 0);
         center = rotation * center;
 
         center = center - new Vector3(0, 0, larger);
