@@ -48,8 +48,7 @@ public class SwitchPanel : InteractionPanel {
         };
         string buttonName = toggleOpts.chooseRandom(str => !existingLabels.Contains(str));
         string actionText = "Turn " + buttonName + " #";
-        char randomChar = ALPHABET.chooseRandom(c => !existingLabels.Contains(c.ToString()));
-        return new ReplacementPanelActionSet(randomChar.ToString(), "Turn " + randomChar + " #", "On", "Off");
+        return new ReplacementPanelActionSet(buttonName, actionText, "On", "Off");
     }
 
     public override void setActionSet(PanelActionSetBase actionSet) {
