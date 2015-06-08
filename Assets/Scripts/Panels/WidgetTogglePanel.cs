@@ -26,9 +26,25 @@ public class WidgetTogglePanel : InteractionPanel {
           "Hydraulic Power Drive Unit",
           "Leap",
           "Autowiring",
-          "Tracking"
+          "Tracking",
+          "Spider Hands",
+          "Creativity",
+          "Image Passthrough",
+          "Caterpillar",
+          "Coffee Maker",
+          "Core i7",
+          "Speakers",
+          "Pongo",
+          "Simulator",
+          "HOPS",
+          "Weekend Air Conditioning",
+          "Microwave",
+          "LED",
+          "HDMI",
+          "Thunderbolt",
+          "Lightning",
+          "Adaptation"
         };
-        // FIXME: with less than three items, will fail and say awaiting instructions
         string buttonName = toggleOpts.chooseRandom(str => !existingLabels.Contains(str));
         string actionText;
         if (string.Compare(buttonName, "Main Screen") == 0) {
