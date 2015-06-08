@@ -40,7 +40,7 @@ public class WidgetTogglePanel : InteractionPanel {
         return new ReplacementPanelActionSet(buttonName, actionText, "On", "Off");
     }
 
-    string[] _pushActions = { "Uninstal #Oculus Runtime",
+    string[] _pushActions = { "Uninstall #Oculus Runtime",
                               "Restart #Leap Service",
                               "Tune #The Parameters",
                               "Divide By #Zero",
