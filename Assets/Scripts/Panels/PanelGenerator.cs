@@ -7,9 +7,9 @@ using System.Collections.Generic;
 public class PanelGenerator : MonoBehaviour {
     public const float CELL_SIZE = 0.13f;
     public const int CELLS_X = 4;
-    public const int CELLS_Y = 5;
+    public const int CELLS_Y = 4;
     public const int CONSOLE_WIDTH = 2;
-    public const int CONSOLE_HEIGHT = 1;
+    public const int CONSOLE_HEIGHT = 0;
 
     [SerializeField]
     protected List<InteractionPanel> panelPrefabs;

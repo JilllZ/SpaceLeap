@@ -38,6 +38,7 @@ public class ProgressBar : MonoBehaviour {
             foreach(MoveDownUp d in FindObjectsOfType<MoveDownUp>()){
                 d.moveUp();
             }
+            _progress = startProgress;
         }
 
         if (_progress == 0) {

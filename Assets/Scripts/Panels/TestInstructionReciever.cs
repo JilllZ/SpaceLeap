@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 using System.Collections;
 
 public class TestInstructionReciever : MonoBehaviour {
-    public float instructionTime = 8.0f;
+    public const float INSTRUCTION_TIME = 10.0f;
     public Slider slider;
 
     void Awake() {
@@ -14,7 +14,7 @@ public class TestInstructionReciever : MonoBehaviour {
     }
 
     void Update() {
-        slider.value = Mathf.MoveTowards(slider.value, 0.0f, Time.deltaTime / instructionTime);
+        slider.value = Mathf.MoveTowards(slider.value, 0.0f, Time.deltaTime / INSTRUCTION_TIME);
         if (slider.value <= 0.0f) {
             new InstructionMissed().sendToServer();
             enabled = false;
@@ -25,9 +25,11 @@ public class TestInstructionReciever : MonoBehaviour {
         DisplayInstructionMessage mm = message.ReadMessage<DisplayInstructionMessage>();
         GetComponent<Text>().text = mm.instruction;
 
+        slider.value = 1.0f;
         if(mm.startTimer){
             enabled = true;
-            slider.value = 1.0f;
+        } else {
+            enabled = false;
         }
     }
 

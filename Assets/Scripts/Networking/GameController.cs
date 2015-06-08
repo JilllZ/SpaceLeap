@@ -34,7 +34,6 @@ public class GameController : NetworkBehaviour {
             return;
         }
 
-        _currentInstructions.Clear();
         _canInstruct = false;
 
         new DisplayInstructionMessage("Air Space!", false).sendToAllClients();
@@ -43,6 +42,11 @@ public class GameController : NetworkBehaviour {
 
     private IEnumerator nextLevelCoroutine(float extraWait = 0.0f) {
         yield return new WaitForSeconds(extraWait);
+
+        _idToPanelActionSets.Clear();
+        _connectionIdToPanelIds.Clear();
+        _currentInstructions.Clear();
+
         int playerCount = CustomLobbyManager.allConnections.Count();
 
         List<List<CreatePanelMessage>> allPanels = PanelGenerator.generateAllPanelsForAllPlayers(playerCount);
@@ -78,7 +82,6 @@ public class GameController : NetworkBehaviour {
             return;
         }
 
-        _currentInstructions.Clear();
         _canInstruct = false;
 
         new DisplayInstructionMessage("Failure", false).sendToAllClients();

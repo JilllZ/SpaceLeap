@@ -24,7 +24,8 @@ public class SwitchPanel : InteractionPanel {
 
     public override void setActionSet(PanelActionSetBase actionSet) {
         base.setActionSet(actionSet);
-        //switchBody.transform.localEulerAngles = new Vector3(actionSet.currentVariantIndex == 0 ? range : -range, 0, 0);
+        _prevOnState = actionSet.currentVariantIndex == 0;
+        switchBody.transform.localEulerAngles = new Vector3(_prevOnState ? 1 : -1, 0, 0);
         label.text = _actionSet.panelLabel;
     }
 
