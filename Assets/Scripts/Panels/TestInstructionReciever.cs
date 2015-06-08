@@ -9,7 +9,8 @@ public class TestInstructionReciever : MonoBehaviour {
 
     void Awake() {
         CustomMessage.registerClientHandler<DisplayInstructionMessage>(instructionHandler);
-        slider.value = 0.0f;
+        slider.value = 1.0f;
+        enabled = false;
     }
 
     void Update() {

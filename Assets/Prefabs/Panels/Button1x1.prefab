@@ -111,6 +111,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 471940}
   - 114: {fileID: 11448754}
+  - 114: {fileID: 11478302}
   m_Layer: 0
   m_Name: Button1x1
   m_TagString: Untagged
@@ -347,10 +348,21 @@ MonoBehaviour:
     m_MaxSize: 40
     m_Alignment: 4
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: This Label So Much
+  m_Text: ' asd asd asd asd asd asd asd asd asd '
+--- !u!114 &11478302
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 180292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e047650f8eddad94dbf5b94334f05d95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11480036
 MonoBehaviour:
   m_ObjectHideFlags: 1

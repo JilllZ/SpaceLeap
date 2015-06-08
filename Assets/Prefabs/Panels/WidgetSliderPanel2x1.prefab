@@ -434,6 +434,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 407164}
   - 114: {fileID: 11409216}
+  - 114: {fileID: 11486994}
   m_Layer: 0
   m_Name: WidgetSliderPanel2x1
   m_TagString: Untagged
@@ -487,7 +488,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 195616}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
   m_LocalScale: {x: .0302713644, y: .030271396, z: .0302713905}
   m_Children:
   - {fileID: 439694}
@@ -1104,6 +1105,7 @@ MonoBehaviour:
   spawnWeight: 1.39999998
   dimensionX: 2
   dimensionY: 1
+  backPanelPrefabs: []
   dotRange: {x: 3, y: 3}
   label: {fileID: 11482148}
   sliderDisplay: {fileID: 11418254}
@@ -1219,10 +1221,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: .905882359, g: .784313738, b: .105882354, a: 1}
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
+    m_Font: {fileID: 12800000, guid: 2eab921198154ec4e934bfe68d06d984, type: 3}
+    m_FontSize: 69
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -1232,7 +1234,18 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 'asd asd asd asd asd asd asd asd '
+--- !u!114 &11486994
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e047650f8eddad94dbf5b94334f05d95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11489242
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1366,8 +1379,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 80}
+  m_AnchoredPosition: {x: -1, y: 30}
+  m_SizeDelta: {x: 865, y: 180}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22488308
 RectTransform:

@@ -14,7 +14,8 @@ public class GameController : NetworkBehaviour {
 
     //List of all instructions currently being dispatched
     private List<ServerInstruction> _currentInstructions = new List<ServerInstruction>();
-    
+    private bool _canInstruct = false;
+
     [ServerCallback]
     void Awake() {
         //Register the handler for the panel actions coming from the clients
@@ -58,6 +59,9 @@ public class GameController : NetworkBehaviour {
             index++;
         }
 
+        yield return new WaitForSeconds(5.0f);
+        _canInstruct = true;
+
         foreach (var connection in CustomLobbyManager.allConnections) {
             issueNewInstruction(connection.connectionId);
         }
@@ -73,7 +77,7 @@ public class GameController : NetworkBehaviour {
                                    where instruction.panelActionVariantIndex == panelAction.variantIndex
                                    select instruction).FirstOrDefault();
 
-        if (satisfiedInstruction != null) {
+        if (_canInstruct && satisfiedInstruction != null) {
             issueNewInstruction(satisfiedInstruction.instructionReaderConnection);
             _currentInstructions.Remove(satisfiedInstruction);
             new ProgressMessage(1).sendToAllClients();

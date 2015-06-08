@@ -171,7 +171,7 @@ public class PanelGenerator : MonoBehaviour {
         float larger = 0.4f;
         center = new Vector3(0, panelY + downMostCellCenter, larger) + _instance.transform.position;
 
-        rotation = Quaternion.Euler(0, (panelX + leftMostCellCenter) * 72, 0);
+        rotation = Quaternion.Euler(0, (panelX + leftMostCellCenter) * 75, 0);
         center = rotation * center;
 
         center = center - new Vector3(0, 0, larger);
