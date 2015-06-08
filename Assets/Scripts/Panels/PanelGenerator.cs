@@ -153,7 +153,7 @@ public class PanelGenerator : MonoBehaviour {
         Vector3 pos = Vector3.zero;
         Quaternion rot = Quaternion.identity;
         getCellCenter(panelMessage.x, panelMessage.y, newPanel.dimensionX, newPanel.dimensionY, out pos, out rot);
-        newPanel.transform.position = pos;
+        newPanel.transform.position = pos + Vector3.up * MoveDownUp.HEIGHT;
         newPanel.transform.rotation = rot;
 
         newPanel.setActionSet(panelMessage.actionSet);

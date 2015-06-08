@@ -11,8 +11,8 @@ public class MoveDownUp : MonoBehaviour {
     private float _destination = 0.0f;
 
     void Start() {
-        _lowLocation = transform.position;
-        _highLocation = _lowLocation + Vector3.up * HEIGHT;
+        _lowLocation = transform.position - Vector3.up * HEIGHT;
+        _highLocation = transform.position;
     }
 
     void Update() {
