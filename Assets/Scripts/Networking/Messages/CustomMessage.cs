@@ -44,6 +44,12 @@ public class CustomMessage : MessageBase {
         CustomLobbyManager.myClient.Send(getMessageId(GetType()), this);
     }
 
+    public void sendToAllClients() {
+        foreach (NetworkConnection c in CustomLobbyManager.allConnections) {
+            sendToClient(c);
+        }
+    }
+
     public void sendToClient(NetworkConnection clientConnection) {
         NetworkServer.SendToClient(clientConnection.connectionId, getMessageId(GetType()), this);
     }
