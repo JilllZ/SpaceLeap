@@ -15,12 +15,27 @@ public class WidgetSliderPanel : InteractionPanel {
     public SliderDemo slider;
 
     public override PanelActionSetBase createViableActionSet(HashSet<string> existingLabels) {
-        char randomChar = ALPHABET.chooseRandom(c => !existingLabels.Contains(c.ToString()));
+        string[] sliderOpts = {
+          "Flux Capacitor",
+          "Phaser",
+          "Tazer",
+          "Warp",
+          "Power Saving",
+          "OKR Score",
+          "Sprint Points",
+          "CPU Usage",
+          "Strobe Interval",
+          "Epsilon",
+          "Skeleton Separation",
+          "Latency"
+        };
+        string sliderName = sliderOpts.chooseRandom(str => !existingLabels.Contains(str));
+        string actionText = "Set " + sliderName + " To #";
 
         string[] variants = new string[Mathf.RoundToInt(Random.Range(dotRange.x, dotRange.y))];
         variants.fill(i => (i+1).ToString());
 
-        return new ReplacementPanelActionSet(randomChar.ToString(), "Set " + randomChar + " To #", variants);
+        return new ReplacementPanelActionSet(sliderName, actionText, variants);
     }
 
     public override void setActionSet(PanelActionSetBase actionSet) {
