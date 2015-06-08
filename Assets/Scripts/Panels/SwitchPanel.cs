@@ -28,7 +28,8 @@ public class SwitchPanel : InteractionPanel {
         label.text = _actionSet.panelLabel;
     }
 
-    void Awake() {
+    protected override void Awake() {
+        base.Awake();
         _joint = switchBody.GetComponent<HingeJoint>();
     }
 

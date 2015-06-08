@@ -1101,7 +1101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b03ce017d5a0521439eb21bc66bd0356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnWeight: 1
+  spawnWeight: 1.39999998
   dimensionX: 2
   dimensionY: 1
   dotRange: {x: 3, y: 3}
@@ -1396,7 +1396,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: spawnWeight
-      value: 1
+      value: 1.39999998
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
